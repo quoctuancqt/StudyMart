@@ -1,0 +1,82 @@
+﻿@page "/category"
+@using Microsoft.AspNetCore.Authorization
+@using StudyMart.Web.Services
+@using StudyMart.Web.ViewModels
+@inject CategoryService CategoryService
+@attribute [Authorize]
+
+<h3>Category Management</h3>
+
+@if (categories == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in categories)
+            {
+                <tr>
+                    <td>@category.Name</td>
+                    <td>
+                        <button @onclick="() => EditCategory(category)">Edit</button>
+                        <button @onclick="() => DeleteCategory(category.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <EditForm Model="currentCategory" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="name">Name</label>
+            <InputText id="name" class="form-control" @bind-Value="currentCategory.Name" />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+}
+
+@code {
+    private List<CategoryModel>? categories;
+    private CategoryModel currentCategory = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await CategoryService.GetCategoriesAsync();
+    }
+
+    private void EditCategory(CategoryModel category)
+    {
+        currentCategory = category;
+    }
+
+    private async Task DeleteCategory(int id)
+    {
+        await CategoryService.DeleteCategoryAsync(id);
+        categories = await CategoryService.GetCategoriesAsync();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (currentCategory.Id == 0)
+        {
+            await CategoryService.AddCategoryAsync(currentCategory);
+        }
+        else
+        {
+            await CategoryService.UpdateCategoryAsync(currentCategory);
+        }
+
+        currentCategory = new();
+        categories = await CategoryService.GetCategoriesAsync();
+    }
+}
