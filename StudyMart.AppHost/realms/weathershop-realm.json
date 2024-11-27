@@ -1,6 +1,6 @@
 {
   "id": "86683c73-be28-4380-a014-6316c0404192",
-  "realm": "WeatherShop",
+  "realm": "StudyMart",
   "notBefore": 0,
   "defaultSignatureAlgorithm": "RS256",
   "revokeRefreshToken": false,
@@ -57,7 +57,7 @@
       },
       {
         "id": "f2bd959d-ed9d-4409-af6d-206a4a52cc23",
-        "name": "default-roles-weathershop",
+        "name": "default-roles-studymart",
         "description": "${role_default-roles}",
         "composite": true,
         "composites": {

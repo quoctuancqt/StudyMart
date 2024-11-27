@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMart.MailDev.Hosting",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMart.MailKit.Client", "StudyMart.MailKit.Client\StudyMart.MailKit.Client.csproj", "{CE5D3641-EE28-4455-976D-662618A26479}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMart.Contract", "StudyMart.Contract\StudyMart.Contract.csproj", "{69443DA5-3DA9-415A-A3E1-8F3889B72850}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{CE5D3641-EE28-4455-976D-662618A26479}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE5D3641-EE28-4455-976D-662618A26479}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE5D3641-EE28-4455-976D-662618A26479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69443DA5-3DA9-415A-A3E1-8F3889B72850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69443DA5-3DA9-415A-A3E1-8F3889B72850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69443DA5-3DA9-415A-A3E1-8F3889B72850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69443DA5-3DA9-415A-A3E1-8F3889B72850}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

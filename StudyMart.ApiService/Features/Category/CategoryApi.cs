@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using StudyMart.ApiService.Authorization;
 using StudyMart.ApiService.Data;
 using StudyMart.ApiService.Filters;
+using StudyMart.Contract.Category;
 using CategoryModel = StudyMart.ApiService.Data.Entities.Category;
 
 namespace StudyMart.ApiService.Features.Category;
@@ -15,49 +15,36 @@ internal static class CategoryApi
 
         group.WithTags("Categories");
 
-        // Add security requirements, all incoming requests to this API *must*
-        // be authenticated with a valid user.
-        group.RequireAuthorization(pb => pb.RequireCurrentUser());
-
-        // Rate limit all of the APIs
-        // group.RequirePerUserRateLimit();
+        group.RequireAuthorization();
 
         // Validate the parameters
-        group.WithParameterValidation(typeof(CategoryModel));
+        group.WithParameterValidation(typeof(CreateOrUpdateCategoryDto));
 
-        group.MapGet("/", async (AppDbContext db) =>
-        {
-            return await db.Categories.AsNoTracking().ToListAsync();
-        });
+        group.MapGet("/", async (AppDbContext db) => await db.Categories.AsNoTracking().Select(c => c.ToDto()).ToListAsync());
 
-        group.MapGet("/{id}", async Task<Results<Ok<CategoryModel>, NotFound>> (AppDbContext db, int id) =>
+        group.MapGet("/{id}", async Task<Results<Ok<CategoryDto>, NotFound>> (AppDbContext db, int id) =>
         {
             return await db.Categories.FindAsync(id) switch
             {
-                CategoryModel category => TypedResults.Ok(category),
+                { } category => TypedResults.Ok(new CategoryDto(category.CategoryID, category.Name)),
                 _ => TypedResults.NotFound()
             };
         });
 
-        group.MapPost("/", async Task<Created<CategoryModel>> (AppDbContext db, CategoryModel newCategory) =>
+        group.MapPost("/", async Task<Created<CreateOrUpdateCategoryDto>> (AppDbContext db, CreateOrUpdateCategoryDto newCategory) =>
         {
-            db.Categories.Add(newCategory);
+            var category = new CategoryModel { Name = newCategory.Name };
+            db.Categories.Add(category);
             await db.SaveChangesAsync();
 
-            return TypedResults.Created($"/categories/{newCategory.CategoryID}", newCategory);
+            return TypedResults.Created($"/categories/{category.CategoryID}", newCategory);
         });
 
-        group.MapPut("/{id}", async Task<Results<Ok, NotFound, BadRequest>> (AppDbContext db, int id, CategoryModel category) =>
+        group.MapPut("/{id}", async Task<Results<Ok, NotFound, BadRequest>> (AppDbContext db, int id, CreateOrUpdateCategoryDto category) =>
         {
-            if (id != category.CategoryID)
-            {
-                return TypedResults.BadRequest();
-            }
-
             var rowsAffected = await db.Categories.Where(t => t.CategoryID == id)
                                              .ExecuteUpdateAsync(updates =>
-                                                updates.SetProperty(t => t.IsDeleted, category.IsDeleted)
-                                                       .SetProperty(t => t.Name, category.Name));
+                                                updates.SetProperty(t => t.Name, category.Name));
 
             return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.Ok();
         });

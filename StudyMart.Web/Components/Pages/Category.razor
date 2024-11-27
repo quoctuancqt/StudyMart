@@ -4,10 +4,11 @@
 @using StudyMart.Web.ViewModels
 @inject CategoryService CategoryService
 @attribute [Authorize]
+@rendermode InteractiveServer
 
 <h3>Category Management</h3>
 
-@if (categories == null)
+@if (_categories == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -21,62 +22,64 @@ else
         </tr>
     </thead>
     <tbody>
-        @foreach (var category in categories)
+        @foreach (var category in _categories)
             {
                 <tr>
                     <td>@category.Name</td>
                     <td>
                         <button @onclick="() => EditCategory(category)">Edit</button>
-                        <button @onclick="() => DeleteCategory(category.Id)">Delete</button>
+                        <button @onclick="() => DeleteCategory(category.CategoryID)">Delete</button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 
-    <EditForm Model="currentCategory" OnValidSubmit="HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    <EditForm Model="CurrentCategory" OnValidSubmit="HandleValidSubmit" FormName="category-form">
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
         <div class="form-group">
             <label for="name">Name</label>
-            <InputText id="name" class="form-control" @bind-Value="currentCategory.Name" />
+            <InputText id="name" class="form-control" @bind-Value="CurrentCategory!.Name"/>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </EditForm>
 }
 
 @code {
-    private List<CategoryModel>? categories;
-    private CategoryModel currentCategory = new();
+    private List<CategoryModel>? _categories;
+    [SupplyParameterFromForm]
+    private CategoryModel? CurrentCategory { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        categories = await CategoryService.GetCategoriesAsync();
+        _categories = await CategoryService.GetCategoriesAsync();
+        CurrentCategory ??= new();
     }
 
     private void EditCategory(CategoryModel category)
     {
-        currentCategory = category;
+        CurrentCategory = category;
     }
 
     private async Task DeleteCategory(int id)
     {
         await CategoryService.DeleteCategoryAsync(id);
-        categories = await CategoryService.GetCategoriesAsync();
+        _categories = await CategoryService.GetCategoriesAsync();
     }
 
     private async Task HandleValidSubmit()
     {
-        if (currentCategory.Id == 0)
+        if (CurrentCategory?.CategoryID == 0)
         {
-            await CategoryService.AddCategoryAsync(currentCategory);
+            await CategoryService.AddCategoryAsync(CurrentCategory);
         }
         else
         {
-            await CategoryService.UpdateCategoryAsync(currentCategory);
+            await CategoryService.UpdateCategoryAsync(CurrentCategory!);
         }
 
-        currentCategory = new();
-        categories = await CategoryService.GetCategoriesAsync();
+        CurrentCategory = new();
+        _categories = await CategoryService.GetCategoriesAsync();
     }
 }

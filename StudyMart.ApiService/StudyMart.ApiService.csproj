@@ -5,10 +5,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StudyMart.Contract\StudyMart.Contract.csproj" />
     <ProjectReference Include="..\StudyMart.MailKit.Client\StudyMart.MailKit.Client.csproj" />
     <ProjectReference Include="..\StudyMart.ServiceDefaults\StudyMart.ServiceDefaults.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Abstractions" />
+    <PackageReference Include="Asp.Versioning.WebApi" />
+    <PackageReference Include="Asp.Versioning.WebApi.ApiExplorer" />
     <PackageReference Include="Aspire.Keycloak.Authentication" />
     <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
@@ -25,6 +29,8 @@
     <PackageReference Include="MiniValidation" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Scalar.AspNetCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features/Order/" />

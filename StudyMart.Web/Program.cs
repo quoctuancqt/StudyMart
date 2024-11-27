@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using StudyMart.Web;
 using StudyMart.Web.Components;
 using StudyMart.Web.Services;
-using StudyMart.Web.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +19,8 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpContextAccessor()
     .AddTransient<AuthorizationHandler>();
+
+builder.Services.AddHttpLogging();
 
 builder.Services.AddHttpClient("StudyMartApi", client =>
     {
@@ -41,21 +42,23 @@ builder.Services.AddAuthentication(options =>
     })
     .AddKeycloakOpenIdConnect(
         "keycloak",
-        realm: "WeatherShop",
+        realm: "study-mart",
         options =>
         {
-            options.ClientId = "WeatherWeb";
+            options.ClientId = "web";
             options.ResponseType = OpenIdConnectResponseType.Code;
-            options.Scope.Add("weather:all");
+            options.Scope.Add("offline_access");
+            options.Scope.Add("profile");
+            options.Scope.Add("openid");
             options.RequireHttpsMetadata = false;
             options.SaveTokens = true;
             options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         })
     .AddCookie();
 
-builder.Services.AddAuthorization();
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<CategoryService>();
 
@@ -70,14 +73,14 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAntiforgery();
-
 app.UseOutputCache();
 
 app.UseCookiePolicy();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseAntiforgery();
 
 app.MapStaticAssets();
 

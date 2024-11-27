@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace StudyMart.Web;
 
-public class AuthorizationHandler(IHttpContextAccessor httpContextAccessor) : DelegatingHandler
+public class AuthorizationHandler(IHttpContextAccessor httpContextAccessor, IServiceProvider provider) : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
@@ -16,8 +16,6 @@ public class AuthorizationHandler(IHttpContextAccessor httpContextAccessor) : De
         {
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
-
-        Console.WriteLine($"accessToken: {accessToken}");
 
         return await base.SendAsync(request, cancellationToken);
     }

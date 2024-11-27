@@ -12,7 +12,7 @@ var cache = builder.AddRedis("cache").WithClearCommand().WithLifetime(ContainerL
 var mailDev = builder.AddMailDev("maildev").WithLifetime(ContainerLifetime.Persistent);
 
 var keycloak = builder.AddKeycloak("keycloak", 8080)
-    .WithRealmImport("./realms")
+    // .WithRealmImport("./realms")
     // .WithDataVolume()
     .WithLifetime(ContainerLifetime.Persistent);
 
