@@ -34,8 +34,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features/Order/" />
-    <Folder Include="Features/Product/" />
-    <Folder Include="Features/Review/" />
-    <Folder Include="Features/ShoppingCart/" />
   </ItemGroup>
 </Project>

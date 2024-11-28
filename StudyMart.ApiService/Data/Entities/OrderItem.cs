@@ -6,7 +6,7 @@ namespace StudyMart.ApiService.Data.Entities;
 public class OrderItem
 {
     [Key]
-    public int OrderItemID { get; set; }
+    public int OrderItemId { get; set; }
 
     [Required]
     public int Quantity { get; set; }
@@ -16,9 +16,9 @@ public class OrderItem
     public decimal Price { get; set; }
 
     // Foreign Keys
-    public int OrderID { get; set; }
+    public int OrderId { get; set; }
     public Order? Order { get; set; }
 
-    public int ProductID { get; set; }
+    public int ProductId { get; set; }
     public Product? Product { get; set; }
 }

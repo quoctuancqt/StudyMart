@@ -5,13 +5,9 @@ namespace StudyMart.ApiService.Data.Entities;
 public class ShoppingCart
 {
     [Key]
-    public int CartID { get; set; }
+    public int CartId { get; set; }
 
-    [Required]
-    public int Quantity { get; set; }
+    public string UserId { get; set; }
 
-    public int UserID { get; set; }
-
-    public int ProductID { get; set; }
-    public Product? Product { get; set; }
+    public ICollection<CartItem>? CartItems { get; set; }
 }

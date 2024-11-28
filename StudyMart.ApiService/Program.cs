@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using StudyMart.ApiService.Authorization;
 using StudyMart.ApiService.Data;
 using StudyMart.ApiService.Features.Category;
+using StudyMart.ApiService.Features.Product;
+using StudyMart.ApiService.Features.ShoppingCart;
 using StudyMart.MailKit.Client;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -82,6 +86,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddScoped<CurrentUser>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -108,6 +114,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapCategories();
+app.MapProductEndpoints();
+app.MapShoppingCartEndpoints();
 
 #region Mailkit Sample
 // app.MapPost("/subscribe",
@@ -134,6 +142,8 @@ app.MapCategories();
 //         await client.SendAsync(MimeMessage.CreateFromMailMessage(message));
 //     });
 #endregion
+
+app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
 
 app.MapDefaultEndpoints();
 

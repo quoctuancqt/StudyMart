@@ -4,10 +4,10 @@ using StudyMart.Contract.Category;
 
 namespace StudyMart.ApiService.Data.Entities;
 
-public class Category : ISoftDelete
+public class Category : ISoftDeletable
 {
     [Key]
-    public int CategoryID { get; set; }
+    public int CategoryId { get; set; }
 
     [Required]
     [MaxLength(100)]
@@ -17,5 +17,5 @@ public class Category : ISoftDelete
 
     public ICollection<Product>? Products { get; set; }
     
-    public CategoryDto ToDto() => new(CategoryID, Name);
+    public CategoryDto ToDto() => new(CategoryId, Name);
 }

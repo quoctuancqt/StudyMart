@@ -11,9 +11,8 @@ internal static class CategoryApi
 {
     public static RouteGroupBuilder MapCategories(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/categories");
-
-        group.WithTags("Categories");
+        var group = routes.MapGroup("api/categories")
+            .WithTags("Categories");
 
         group.RequireAuthorization();
 
@@ -26,7 +25,7 @@ internal static class CategoryApi
         {
             return await db.Categories.FindAsync(id) switch
             {
-                { } category => TypedResults.Ok(new CategoryDto(category.CategoryID, category.Name)),
+                { } category => TypedResults.Ok(category.ToDto()),
                 _ => TypedResults.NotFound()
             };
         });
@@ -36,13 +35,12 @@ internal static class CategoryApi
             var category = new CategoryModel { Name = newCategory.Name };
             db.Categories.Add(category);
             await db.SaveChangesAsync();
-
-            return TypedResults.Created($"/categories/{category.CategoryID}", newCategory);
+            return TypedResults.Created($"/api/categories/{category.CategoryId}", newCategory);
         });
 
         group.MapPut("/{id}", async Task<Results<Ok, NotFound, BadRequest>> (AppDbContext db, int id, CreateOrUpdateCategoryDto category) =>
         {
-            var rowsAffected = await db.Categories.Where(t => t.CategoryID == id)
+            var rowsAffected = await db.Categories.Where(t => t.CategoryId == id)
                                              .ExecuteUpdateAsync(updates =>
                                                 updates.SetProperty(t => t.Name, category.Name));
 
@@ -51,8 +49,9 @@ internal static class CategoryApi
 
         group.MapDelete("/{id}", async Task<Results<NotFound, Ok>> (AppDbContext db, int id) =>
         {
-            var rowsAffected = await db.Categories.Where(t => t.CategoryID == id)
-                                             .ExecuteDeleteAsync();
+            var rowsAffected = await db.Categories.Where(t => t.CategoryId == id)
+                .ExecuteUpdateAsync(updates =>
+                    updates.SetProperty(t => t.IsDeleted, true));
 
             return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.Ok();
         });
