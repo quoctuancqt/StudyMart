@@ -11,4 +11,7 @@
     <PackageReference Include="Aspire.Keycloak.Authentication" />
     <PackageReference Include="Aspire.StackExchange.Redis.OutputCaching" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\icons\" />
+  </ItemGroup>
 </Project>

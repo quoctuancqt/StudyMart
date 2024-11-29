@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace StudyMart.Web.ViewModels;
 
-public class CategoryModel
+public class Category
 {
     public int CategoryID { get; set; }
     [Required]

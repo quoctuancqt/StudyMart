@@ -47,9 +47,9 @@ else
 }
 
 @code {
-    private List<CategoryModel>? _categories;
+    private List<ViewModels.Category>? _categories;
     [SupplyParameterFromForm]
-    private CategoryModel? CurrentCategory { get; set; }
+    private ViewModels.Category? CurrentCategory { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -57,7 +57,7 @@ else
         CurrentCategory ??= new();
     }
 
-    private void EditCategory(CategoryModel category)
+    private void EditCategory(ViewModels.Category category)
     {
         CurrentCategory = category;
     }

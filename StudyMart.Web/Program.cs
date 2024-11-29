@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Server;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using StudyMart.Web;
 using StudyMart.Web.Components;
-using StudyMart.Web.Services;
+using StudyMart.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,7 +60,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStat
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthorization();
 
-builder.Services.AddScoped<CategoryService>();
+builder.AddAppServices();
 
 var app = builder.Build();
 

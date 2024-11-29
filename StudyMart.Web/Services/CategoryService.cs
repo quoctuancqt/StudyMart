@@ -5,34 +5,35 @@ namespace StudyMart.Web.Services;
 public class CategoryService(IHttpClientFactory httpClientFactory)
 {
     private readonly HttpClient _httpClient = httpClientFactory.CreateClient("StudyMartApi");
+    private const string BaseUrl = "/api/categories";
 
-    public async Task<List<CategoryModel>> GetCategoriesAsync()
+    public async Task<List<Category>> GetCategoriesAsync()
     {
-        var categories = await _httpClient.GetFromJsonAsync<List<CategoryModel>>("categories");
+        var categories = await _httpClient.GetFromJsonAsync<List<Category>>(BaseUrl);
         return categories ?? [];
     }
 
-    public async Task<CategoryModel> GetCategoryByIdAsync(int id)
+    public async Task<Category> GetCategoryByIdAsync(int id)
     {
-        var category = await _httpClient.GetFromJsonAsync<CategoryModel>($"categories/{id}");
-        return category ?? new CategoryModel();
+        var category = await _httpClient.GetFromJsonAsync<Category>($"{BaseUrl}/{id}");
+        return category ?? new Category();
     }
 
-    public async Task AddCategoryAsync(CategoryModel category)
+    public async Task AddCategoryAsync(Category category)
     {
-        var responseMessage= await _httpClient.PostAsJsonAsync("categories", category);
+        var responseMessage= await _httpClient.PostAsJsonAsync(BaseUrl, category);
         responseMessage.EnsureSuccessStatusCode();
     }
 
-    public async Task UpdateCategoryAsync(CategoryModel category)
+    public async Task UpdateCategoryAsync(Category category)
     {
-        var responseMessage = await _httpClient.PutAsJsonAsync($"categories/{category.CategoryID}", category);
+        var responseMessage = await _httpClient.PutAsJsonAsync($"{BaseUrl}/{category.CategoryID}", category);
         responseMessage.EnsureSuccessStatusCode();
     }
 
     public async Task DeleteCategoryAsync(int id)
     {
-        var responseMessage = await _httpClient.DeleteAsync($"categories/{id}");
+        var responseMessage = await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
         responseMessage.EnsureSuccessStatusCode();
     }
 }
