@@ -1,8 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using StudyMart.ApiService.Swagger;
+using StudyMart.Contract.Order;
 
 namespace StudyMart.ApiService.Data.Entities;
 
+[SwaggerExclude]
 public class Order
 {
     [Key]
@@ -22,4 +25,6 @@ public class Order
 
     // Navigation Property
     public ICollection<OrderItem>? OrderItems { get; set; }
+
+    public OrderDto ToDto() => new(OrderId, OrderDate, TotalAmount, Status.ToString());
 }

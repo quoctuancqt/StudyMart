@@ -32,7 +32,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Features/Order/" />
-  </ItemGroup>
 </Project>

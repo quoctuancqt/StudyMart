@@ -19,18 +19,18 @@ internal static class ProductApi
 
         group.WithParameterValidation(typeof(CreateOrUpdateProductDto));
 
-        group.MapGet("/", async (AppDbContext db) => await db.Products.AsNoTracking().Select(p => p.ToDto()).ToListAsync());
+        group.MapGet("/", async (AppDbContext db) => await db.Products.Include(p => p.Category).AsNoTracking().Select(p => p.ToDto()).ToListAsync()).AllowAnonymous();
 
         group.MapGet("/{id}", async Task<Results<Ok<ProductDto>, NotFound>> (int id, AppDbContext db) =>
         {
-            return await db.Products.AsNoTracking()
+            return await db.Products.Include(p => p.Category).AsNoTracking()
                     .FirstOrDefaultAsync(p => p.ProductId == id)
                 is { } product
                 ? TypedResults.Ok(product.ToDto())
                 : TypedResults.NotFound();
-        });
+        }).AllowAnonymous();
 
-        group.MapPut("/{id}", async Task<Results<Ok, NotFound>> (int id, CreateOrUpdateProductDto product, AppDbContext db) =>
+        group.MapPut("/{id}", async Task<Results<NoContent, NotFound>> (int id, CreateOrUpdateProductDto product, AppDbContext db) =>
         {
             var affected = await db.Products
                 .Where(model => model.ProductId == id)
@@ -42,10 +42,10 @@ internal static class ProductApi
                     .SetProperty(m => m.CategoryId, product.CategoryId)
                 );
 
-            return affected == 1 ? TypedResults.Ok() : TypedResults.NotFound();
+            return affected == 1 ? TypedResults.NoContent() : TypedResults.NotFound();
         });
         
-        group.MapPut("/{id}/reviews", async Task<Results<Ok, NotFound>> (int id, CreateReviewDto review, AppDbContext db, CurrentUser currentUser) =>
+        group.MapPost("/{id}/reviews", async Task<Results<NoContent, NotFound, BadRequest<HttpValidationProblemDetails>>> (int id, CreateReviewDto review, AppDbContext db, CurrentUser currentUser) =>
         {
             var product = await db.Products.FindAsync(id);
             if (product is null) return TypedResults.NotFound();
@@ -59,10 +59,10 @@ internal static class ProductApi
             };
             db.Reviews.Add(newReview);
             await db.SaveChangesAsync();
-            return TypedResults.Ok();
+            return TypedResults.NoContent();
         });
 
-        group.MapPost("/", async (CreateOrUpdateProductDto newProduct, AppDbContext db) =>
+        group.MapPost("/", async Task<Created<ProductDto>> (CreateOrUpdateProductDto newProduct, AppDbContext db) =>
         {
             var product = new Data.Entities.Product
             {
@@ -74,16 +74,16 @@ internal static class ProductApi
             };
             db.Products.Add(product);
             await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/products/{product.ProductId}", product);
+            return TypedResults.Created($"/api/products/{product.ProductId}", product.ToDto());
         });
 
-        group.MapDelete("/{id}", async Task<Results<Ok, NotFound>> (int id, AppDbContext db) =>
+        group.MapDelete("/{id}", async Task<Results<NoContent, NotFound>> (int id, AppDbContext db) =>
         {
             var rowsAffected = await db.Products.Where(t => t.CategoryId == id)
                 .ExecuteUpdateAsync(updates =>
                     updates.SetProperty(t => t.IsDeleted, true));
 
-            return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.Ok();
+            return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.NoContent();
         });
 
         return group;

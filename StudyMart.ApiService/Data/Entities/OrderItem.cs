@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using StudyMart.ApiService.Swagger;
 
 namespace StudyMart.ApiService.Data.Entities;
 
+[SwaggerExclude]
 public class OrderItem
 {
     [Key]

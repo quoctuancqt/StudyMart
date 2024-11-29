@@ -1,12 +1,13 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using StudyMart.ApiService.Authorization;
 using StudyMart.ApiService.Data;
 using StudyMart.ApiService.Features.Category;
+using StudyMart.ApiService.Features.Order;
 using StudyMart.ApiService.Features.Product;
 using StudyMart.ApiService.Features.ShoppingCart;
+using StudyMart.ApiService.Swagger;
 using StudyMart.MailKit.Client;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,7 +39,6 @@ builder.Services.AddSwaggerGen(options =>
         {
             Implicit = new OpenApiOAuthFlow
             {
-                // TO DO: Update the URL to point to your Keycloak instance.
                 AuthorizationUrl = new Uri("http://localhost:8080/realms/study-mart/protocol/openid-connect/auth", UriKind.Absolute),
                 Scopes = new Dictionary<string, string>
                 {
@@ -60,6 +60,9 @@ builder.Services.AddSwaggerGen(options =>
             ["openid", "profile", "offline_access"]
         }
     });
+    
+    options.SchemaFilter<SwaggerExcludeFilter>();
+    options.DocumentFilter<SwaggerExcludeFilter>();
 });
 
 // Add services to the container.
@@ -116,6 +119,7 @@ app.UseAuthorization();
 app.MapCategories();
 app.MapProductEndpoints();
 app.MapShoppingCartEndpoints();
+app.MapOrderEndpoints();
 
 #region Mailkit Sample
 // app.MapPost("/subscribe",

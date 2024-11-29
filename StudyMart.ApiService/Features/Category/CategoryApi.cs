@@ -30,30 +30,30 @@ internal static class CategoryApi
             };
         });
 
-        group.MapPost("/", async Task<Created<CreateOrUpdateCategoryDto>> (AppDbContext db, CreateOrUpdateCategoryDto newCategory) =>
+        group.MapPost("/", async Task<Created<CategoryDto>> (AppDbContext db, CreateOrUpdateCategoryDto newCategory) =>
         {
             var category = new CategoryModel { Name = newCategory.Name };
             db.Categories.Add(category);
             await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/categories/{category.CategoryId}", newCategory);
+            return TypedResults.Created($"/api/categories/{category.CategoryId}", category.ToDto());
         });
 
-        group.MapPut("/{id}", async Task<Results<Ok, NotFound, BadRequest>> (AppDbContext db, int id, CreateOrUpdateCategoryDto category) =>
+        group.MapPut("/{id}", async Task<Results<NoContent, NotFound, BadRequest<HttpValidationProblemDetails>>> (AppDbContext db, int id, CreateOrUpdateCategoryDto category) =>
         {
             var rowsAffected = await db.Categories.Where(t => t.CategoryId == id)
                                              .ExecuteUpdateAsync(updates =>
                                                 updates.SetProperty(t => t.Name, category.Name));
 
-            return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.Ok();
+            return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.NoContent();
         });
 
-        group.MapDelete("/{id}", async Task<Results<NotFound, Ok>> (AppDbContext db, int id) =>
+        group.MapDelete("/{id}", async Task<Results<NotFound, NoContent>> (AppDbContext db, int id) =>
         {
             var rowsAffected = await db.Categories.Where(t => t.CategoryId == id)
                 .ExecuteUpdateAsync(updates =>
                     updates.SetProperty(t => t.IsDeleted, true));
 
-            return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.Ok();
+            return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.NoContent();
         });
 
         return group;

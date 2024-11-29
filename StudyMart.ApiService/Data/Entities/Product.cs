@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using StudyMart.ApiService.Data.Common;
+using StudyMart.ApiService.Swagger;
 using StudyMart.Contract.Product;
 
 namespace StudyMart.ApiService.Data.Entities;
 
+[SwaggerExclude]
 public class Product : ISoftDeletable
 {
     [Key]
@@ -35,5 +37,5 @@ public class Product : ISoftDeletable
     public ICollection<Review>? Reviews { get; set; }
     public ICollection<CartItem>? CartItems { get; set; }
 
-    public ProductDto ToDto() => new(ProductId, Name, Description, Price, ImageUrl);
+    public ProductDto ToDto() => new(ProductId, Name, Description, Price, ImageUrl, Category!.Name);
 }

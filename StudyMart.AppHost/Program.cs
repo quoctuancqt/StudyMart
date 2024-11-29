@@ -13,7 +13,6 @@ var mailDev = builder.AddMailDev("maildev").WithLifetime(ContainerLifetime.Persi
 
 var keycloak = builder.AddKeycloak("keycloak", 8080)
     // .WithRealmImport("./realms")
-    // .WithDataVolume()
     .WithLifetime(ContainerLifetime.Persistent);
 
 var apiService = builder.AddProject<Projects.StudyMart_ApiService>("apiservice")

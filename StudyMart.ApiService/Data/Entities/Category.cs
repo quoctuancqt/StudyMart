@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using StudyMart.ApiService.Data.Common;
+using StudyMart.ApiService.Swagger;
 using StudyMart.Contract.Category;
 
 namespace StudyMart.ApiService.Data.Entities;
 
+[SwaggerExclude]
 public class Category : ISoftDeletable
 {
     [Key]

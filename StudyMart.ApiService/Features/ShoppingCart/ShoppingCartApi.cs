@@ -15,16 +15,23 @@ internal static class ShoppingCartApi
 
         group.RequireAuthorization();
 
-        group.MapGet("/", async (AppDbContext db, CurrentUser currentUser) =>
+        group.MapGet("/", async Task<Results<Ok<ShoppingCartDto>, NotFound>> (AppDbContext db, CurrentUser currentUser) =>
         {
             var cart = await db.ShoppingCarts
-                .Include(sc => sc.CartItems)
-                .FirstOrDefaultAsync(sc => sc.UserId == currentUser.UserId);
+                .Include(sc => sc.CartItems)!
+                .ThenInclude(ci => ci.Product)
+                .Where(sc => sc.UserId == currentUser.UserId)
+                .Select(sc => new ShoppingCartDto(sc.CartId,
+                    sc.CartItems!.Select(ci => new CartItemDto(ci.Quantity, ci.Product!.Name, ci.Product!.Price))
+                        .ToList()))
+                .FirstOrDefaultAsync();
 
-            return cart ?? new Data.Entities.ShoppingCart();
+            if (cart is null) return TypedResults.NotFound();
+            
+            return TypedResults.Ok(cart);
         });
         
-        group.MapPost("/", async (AddToCartDto addToCartDto, AppDbContext db, CurrentUser currentUser) =>
+        group.MapPost("/", async Task<Results<BadRequest<HttpValidationProblemDetails>, NoContent>> (AddToCartDto addToCartDto, AppDbContext db, CurrentUser currentUser) =>
         {
             var cart = await db.ShoppingCarts
                 .Include(sc => sc.CartItems)
@@ -60,7 +67,7 @@ internal static class ShoppingCartApi
             return TypedResults.NoContent();
         });
         
-        group.MapDelete("/{productId}", async Task<Results<Ok, NotFound>> (int productId, AppDbContext db, CurrentUser currentUser) =>
+        group.MapDelete("/{productId}", async Task<Results<NoContent, NotFound>> (int productId, AppDbContext db, CurrentUser currentUser) =>
         {
             var cart = await db.ShoppingCarts
                 .Include(sc => sc.CartItems)
@@ -80,7 +87,7 @@ internal static class ShoppingCartApi
             cart.CartItems!.Remove(cartItem);
             await db.SaveChangesAsync();
             
-            return TypedResults.Ok();
+            return TypedResults.NoContent();
         });
 
         return group;
