@@ -32,7 +32,7 @@ internal static class CategoryApi
 
         group.MapPost("/", async Task<Created<CategoryDto>> (AppDbContext db, CreateOrUpdateCategoryDto newCategory) =>
         {
-            var category = new CategoryModel { Name = newCategory.Name };
+            var category = new CategoryModel { Name = newCategory.Name, Description = newCategory.Description };
             db.Categories.Add(category);
             await db.SaveChangesAsync();
             return TypedResults.Created($"/api/categories/{category.CategoryId}", category.ToDto());
@@ -42,7 +42,8 @@ internal static class CategoryApi
         {
             var rowsAffected = await db.Categories.Where(t => t.CategoryId == id)
                                              .ExecuteUpdateAsync(updates =>
-                                                updates.SetProperty(t => t.Name, category.Name));
+                                                updates.SetProperty(t => t.Name, category.Name)
+                                                .SetProperty(t => t.Description, category.Description));
 
             return rowsAffected == 0 ? TypedResults.NotFound() : TypedResults.NoContent();
         });

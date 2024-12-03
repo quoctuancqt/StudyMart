@@ -79,7 +79,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         realm: "study-mart",
         options =>
         {
-            options.ClientId = "scalar";
+            options.ClientId = "web";
             options.Scope.Add("offline_access");
             options.Scope.Add("profile");
             options.Scope.Add("openid");
@@ -104,7 +104,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Study Mart API V1");
-        options.OAuthClientId("scalar");
+        options.OAuthClientId("web");
         options.OAuthScopes("openid", "profile", "offline_access");
     });
 
@@ -148,6 +148,12 @@ app.MapOrderEndpoints();
 #endregion
 
 app.MapGet("/", () => Results.Redirect("/swagger")).ExcludeFromDescription();
+
+app.MapGet("/seed", async (AppDbContext dbContext) =>
+{
+    await dbContext.SeedData();
+    return Results.Ok();
+}).ExcludeFromDescription();
 
 app.MapDefaultEndpoints();
 
