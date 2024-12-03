@@ -304,6 +304,7 @@
       "security-admin-console": [],
       "admin-cli": [],
       "account-console": [],
+      "api": [],
       "broker": [
         {
           "id": "3b958e39-ef7c-4ca6-96a9-4fa811043709",
@@ -627,6 +628,64 @@
       ]
     },
     {
+      "id": "db32b928-c01f-4a89-a957-e765d10a5e6e",
+      "clientId": "api",
+      "name": "",
+      "description": "",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "**********",
+      "redirectUris": [
+        "https://localhost:7364/*",
+        "http://localhost:5331/*"
+      ],
+      "webOrigins": [
+        "https://localhost:7364"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "realm_client": "false",
+        "oidc.ciba.grant.enabled": "false",
+        "client.secret.creation.time": "1733222344",
+        "backchannel.logout.session.required": "true",
+        "post.logout.redirect.uris": "https://localhost:7364/*##http://localhost:5331/*",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "organization",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+    {
       "id": "46c53315-e5a5-4474-9939-8170587472e5",
       "clientId": "broker",
       "name": "${client_broker}",
@@ -791,33 +850,32 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
       "redirectUris": [
-        "https://localhost:7110/*",
-        "https://localhost:7364/*",
-        "http://localhost:5331/*"
+        "http://localhost:5244/*",
+        "https://localhost:7110/*"
       ],
       "webOrigins": [
         "https://localhost:7110",
-        "https://localhost:7364",
-        "http://localhost:5331"
+        "http://localhost:5244"
       ],
       "notBefore": 0,
       "bearerOnly": false,
       "consentRequired": false,
       "standardFlowEnabled": true,
-      "implicitFlowEnabled": true,
+      "implicitFlowEnabled": false,
       "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": false,
-      "publicClient": false,
+      "publicClient": true,
       "frontchannelLogout": true,
       "protocol": "openid-connect",
       "attributes": {
+        "access.token.lifespan": "86400",
         "client.secret.creation.time": "1733213262",
         "client.introspection.response.allow.jwt.claim.enabled": "false",
-        "login_theme": "keycloak.v2",
-        "post.logout.redirect.uris": "https://localhost:7110/*##http://localhost:5331/*##https://localhost:7364/*",
+        "login_theme": "keycloak",
+        "post.logout.redirect.uris": "https://localhost:7110/*##http://localhost:5244/*",
         "oauth2.device.authorization.grant.enabled": "false",
+        "use.jwks.url": "false",
         "backchannel.logout.revoke.offline.tokens": "false",
         "use.refresh.tokens": "true",
         "realm_client": "false",

@@ -53,6 +53,7 @@ builder.Services.AddAuthentication(options =>
             options.RequireHttpsMetadata = false;
             options.SaveTokens = true;
             options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.UsePkce = true;
         })
     .AddCookie();
 
