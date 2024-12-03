@@ -11,8 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.Abstractions" />
-    <PackageReference Include="Asp.Versioning.WebApi" />
-    <PackageReference Include="Asp.Versioning.WebApi.ApiExplorer" />
     <PackageReference Include="Aspire.Keycloak.Authentication" />
     <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
