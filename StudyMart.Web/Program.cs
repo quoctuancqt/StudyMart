@@ -35,6 +35,16 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin();
+    });
+});
+
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
@@ -77,6 +87,7 @@ app.UseHttpsRedirection();
 app.UseOutputCache();
 
 app.UseCookiePolicy();
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -15,7 +15,7 @@
                                 aria-expanded="false">
                                 <img role="presentation" src="@Assets["icons/user.svg"]" alt="" />
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
                                     <a class="dropdown-item" href="#">My orders</a>
                                 </li>
@@ -32,9 +32,10 @@
                     </Authorized>
                     <NotAuthorized>
                         <li class="nav-item">
-                            <a aria-label="Sign in" href="authentication/login">
+                            <NavLink class="nav-link" href="authentication/login"><img role="presentation" src="@Assets["icons/user.svg"]" alt="" /></NavLink>
+                            @* <a aria-label="Sign in" href="authentication/login">
                                 <img role="presentation" src="@Assets["icons/user.svg"]" alt="" />
-                            </a>
+                            </a> *@
                         </li>
                     </NotAuthorized>
                 </AuthorizeView>

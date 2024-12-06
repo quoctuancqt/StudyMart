@@ -1,1 +1,13 @@
-{}
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 57439,
+            "driver": "PostgreSQL",
+            "name": "study-mart",
+            "username": "postgres",
+            "database": "postgresqldb"
+        }
+    ]
+}

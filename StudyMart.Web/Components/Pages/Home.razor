@@ -1,7 +1,45 @@
 ﻿@page "/"
+@using StudyMart.Web.Services
+@inject ProductService ProductService
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="row d-flex flex-wrap">
+    @if (_products is not null)
+    {
+        foreach (var product in _products)
+        {
+            <div class="col-md-3 col-lg-6 col-xl-4 py-5 d-flex">
+                <div class="card text-black flex-fill">
+                    <img src="@product.ImageUrl" class="card-img-top"
+                        alt="@product.Name" />
+                    <div class="card-body d-flex flex-column">
+                        <div class="text-center">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="text-muted mb-4">@product.CategoryName</p>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between">
+                                <span>@product.Description</span><span>$@product.Price</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <span>Loading...</span>
+    }
+</div>
 
-Welcome to your new app.
+@code
+{
+    private List<ViewModels.Product>? _products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _products = await ProductService.GetProductsAsync();
+    }
+}
