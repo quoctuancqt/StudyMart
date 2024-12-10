@@ -1,4 +1,10 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using StudyMart.Web.States
+@using StudyMart.Web.ViewModels
+@inject CartContainer CartContainer
+@inject ProtectedLocalStorage ProtectedLocalStorage
+@implements IDisposable
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">StudyMart</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -17,7 +23,7 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="cart">
-                <i class="bi bi-basket" aria-hidden="true"></i> Cart
+                <i class="bi bi-basket" aria-hidden="true"></i> Cart (@(CartContainer.TotalItems))
             </NavLink>
         </div>
         <AuthorizeView>
@@ -52,3 +58,19 @@
 
     </nav>
 </div>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        CartContainer.OnChange += StateHasChanged;
+        var result = await ProtectedLocalStorage.GetAsync<List<CartItem>>("cart");
+        var cartItems = result.Value ?? new List<CartItem>();
+        CartContainer.TotalItems = cartItems.Sum(c => c.Quantity);;
+    }
+
+    public void Dispose()
+    {
+        CartContainer.OnChange -= StateHasChanged;
+    }
+}

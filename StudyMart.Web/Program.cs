@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using StudyMart.Web;
 using StudyMart.Web.Components;
 using StudyMart.Web.Extensions;
-using StudyMart.Web.States.Cart;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,9 +71,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStat
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthorization();
 
-builder.Services.AddScoped<CartStateContainer>();
-
 builder.AddAppServices();
+builder.Services.AddBlazorBootstrap();
 
 var app = builder.Build();
 

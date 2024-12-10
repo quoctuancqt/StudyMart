@@ -1,9 +1,10 @@
 ﻿@page "/"
 @using StudyMart.Web.Services
+@using StudyMart.Web.States
 @using StudyMart.Web.ViewModels
 @inject ProductService ProductService
-@inject ILoggerFactory LoggerFactory
 @inject ProtectedLocalStorage ProtectedLocalStorage
+@inject CartContainer CartContainer
 @rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
@@ -54,9 +55,12 @@
     private async Task AddToCart(Product product)
     {
         var result = await ProtectedLocalStorage.GetAsync<List<CartItem>>("cart");
+        
+        List<CartItem> items;
+        
         if (result.Success)
         {
-            var items = result.Value ?? [];
+            items = result.Value ?? [];
             var existingItem = items.FirstOrDefault(i => i.ProductId == product.Id);
             if (existingItem != null)
             {
@@ -72,21 +76,22 @@
                     Quantity = 1
                 });
             }
-            
-            await ProtectedLocalStorage.SetAsync("cart", items);
         }
         else
         {
-            await ProtectedLocalStorage.SetAsync("cart", new List<CartItem>
-            {
-                new()
+            items =
+            [
+                new CartItem
                 {
                     ProductId = product.Id,
                     Name = product.Name,
                     Price = product.Price,
                     Quantity = 1
                 }
-            });
+            ];
         }
+        
+        CartContainer.AddToCart();
+        await ProtectedLocalStorage.SetAsync("cart", items);
     }
 }
