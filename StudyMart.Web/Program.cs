@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using StudyMart.Web;
 using StudyMart.Web.Components;
 using StudyMart.Web.Extensions;
+using StudyMart.Web.States.Cart;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,9 +38,9 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder =>
+    options.AddDefaultPolicy(b =>
     {
-        builder.AllowAnyHeader()
+        b.AllowAnyHeader()
             .AllowAnyMethod()
             .AllowAnyOrigin();
     });
@@ -70,6 +71,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<CartStateContainer>();
 
 builder.AddAppServices();
 

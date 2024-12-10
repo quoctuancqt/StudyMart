@@ -6,6 +6,7 @@ public static class ServiceExtensions
 {
     public static TBuilder AddAppServices<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
     {
+        builder.Services.AddLogging();
         builder.Services.AddScoped<CategoryService>();
         builder.Services.AddScoped<ProductService>();
         return builder;

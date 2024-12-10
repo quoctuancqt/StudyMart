@@ -27,7 +27,7 @@ public class CategoryService(IHttpClientFactory httpClientFactory)
 
     public async Task UpdateCategoryAsync(Category category)
     {
-        var responseMessage = await _httpClient.PutAsJsonAsync($"{BaseUrl}/{category.CategoryID}", category);
+        var responseMessage = await _httpClient.PutAsJsonAsync($"{BaseUrl}/{category.Id}", category);
         responseMessage.EnsureSuccessStatusCode();
     }
 

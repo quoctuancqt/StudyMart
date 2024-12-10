@@ -3,7 +3,7 @@ using StudyMart.MailDev.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var postgresql = builder.AddPostgres("postgresql")
+var postgresql = builder.AddPostgres("postgresql", port: 5432)
                         // .WithPgWeb()
                         .WithLifetime(ContainerLifetime.Persistent);
 

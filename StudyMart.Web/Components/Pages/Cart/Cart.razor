@@ -1,7 +1,38 @@
 @page "/cart"
+@using StudyMart.Web.ViewModels
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject ProtectedLocalStorage ProtectedLocalStorage
 
-<h3>Cart</h3>
+@if (_cartItems?.Count == 0 || _cartItems is null)
+{
+    <p class="text-center">Your cart is empty.</p>
+}
+else
+{
+    <h3>Cart Details:</h3>
+    <QuickGrid Items="@_cartItems!.AsQueryable()">
+        <PropertyColumn Property="@(c => c.ProductId)" Sortable="true"/>
+        <PropertyColumn Property="@(c => c.Name)" Sortable="true"/>
+        <PropertyColumn Property="@(c => c.Price)"/>
+        <PropertyColumn Property="@(c => c.Quantity)"/>
+    </QuickGrid>
+}
 
 @code {
-    
+    private List<CartItem>? _cartItems;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadStateAsync();
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadStateAsync()
+    {
+        var result = await ProtectedLocalStorage.GetAsync<List<CartItem>>("cart");
+        _cartItems = result is { Success: true, Value: not null } ? result.Value : [];
+    }
 }

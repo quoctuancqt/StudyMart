@@ -2,11 +2,12 @@
 @using Microsoft.AspNetCore.Authorization
 @using StudyMart.Web.Services
 @using StudyMart.Web.ViewModels
+@using Microsoft.AspNetCore.Components.QuickGrid
 @inject CategoryService CategoryService
 @attribute [Authorize]
 @rendermode InteractiveServer
 
-<h3>Category Management</h3>
+<PageTitle>Category</PageTitle>
 
 @if (_categories == null)
 {
@@ -14,26 +15,15 @@
 }
 else
 {
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var category in _categories)
-            {
-                <tr>
-                    <td>@category.Name</td>
-                    <td>
-                        <button @onclick="() => EditCategory(category)">Edit</button>
-                        <button @onclick="() => DeleteCategory(category.CategoryID)">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <QuickGrid Items="@_categories.AsQueryable()">
+        <PropertyColumn Property="@(c => c.Id)" Sortable="true" />
+        <PropertyColumn Property="@(c => c.Name)" Sortable="true" />
+        <PropertyColumn Property="@(c => c.Description)" />
+        <TemplateColumn Title="Actions">
+            <button @onclick="@(() => EditCategory(context))">Edit</button>
+            <button @onclick="@(() => DeleteCategory(context.Id))">Delete</button>
+        </TemplateColumn>
+    </QuickGrid>
 
     <EditForm Model="CurrentCategory" OnValidSubmit="HandleValidSubmit" FormName="category-form">
         <DataAnnotationsValidator/>
@@ -70,7 +60,7 @@ else
 
     private async Task HandleValidSubmit()
     {
-        if (CurrentCategory?.CategoryID == 0)
+        if (CurrentCategory?.Id == 0)
         {
             await CategoryService.AddCategoryAsync(CurrentCategory);
         }

@@ -1,6 +1,10 @@
 ﻿@page "/"
 @using StudyMart.Web.Services
+@using StudyMart.Web.ViewModels
 @inject ProductService ProductService
+@inject ILoggerFactory LoggerFactory
+@inject ProtectedLocalStorage ProtectedLocalStorage
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
@@ -24,22 +28,65 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary mt-3" @onclick="async () => await AddToCart(product)">Add to Cart</button>
+                    </div>
                 </div>
             </div>
         }
     }
     else
     {
-        <span>Loading...</span>
+        <p><em>Loading...</em></p>
     }
 </div>
 
 @code
 {
-    private List<ViewModels.Product>? _products;
+    private List<Product>? _products;
+
 
     protected override async Task OnInitializedAsync()
     {
         _products = await ProductService.GetProductsAsync();
+    }
+
+    private async Task AddToCart(Product product)
+    {
+        var result = await ProtectedLocalStorage.GetAsync<List<CartItem>>("cart");
+        if (result.Success)
+        {
+            var items = result.Value ?? [];
+            var existingItem = items.FirstOrDefault(i => i.ProductId == product.Id);
+            if (existingItem != null)
+            {
+                existingItem.Quantity += 1;
+            }
+            else
+            {
+                items.Add(new CartItem
+                {
+                    ProductId = product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Quantity = 1
+                });
+            }
+            
+            await ProtectedLocalStorage.SetAsync("cart", items);
+        }
+        else
+        {
+            await ProtectedLocalStorage.SetAsync("cart", new List<CartItem>
+            {
+                new()
+                {
+                    ProductId = product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Quantity = 1
+                }
+            });
+        }
     }
 }

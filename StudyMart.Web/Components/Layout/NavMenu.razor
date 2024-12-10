@@ -33,7 +33,7 @@
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
-                    <form action="authentication/logout" method="post" @formname="logout-form" id="logout-form">
+                    <form action="/authentication/logout" method="post" @formname="logout-form" id="logout-form">
                         <AntiforgeryToken />
                         <NavLink class="nav-link" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
                             <i class="bi bi-box-arrow-right" aria-hidden="true" style="margin-right:0.5rem;"></i> Sign out
