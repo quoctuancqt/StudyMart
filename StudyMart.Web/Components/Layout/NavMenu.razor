@@ -66,7 +66,7 @@
         CartContainer.OnChange += StateHasChanged;
         var result = await ProtectedLocalStorage.GetAsync<List<CartItem>>("cart");
         var cartItems = result.Value ?? new List<CartItem>();
-        CartContainer.TotalItems = cartItems.Sum(c => c.Quantity);;
+        CartContainer.TotalItems = cartItems.Sum(c => c.Quantity);
     }
 
     public void Dispose()

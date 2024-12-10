@@ -14,31 +14,24 @@
     {
         foreach (var product in _products)
         {
-            <div class="col-md-3 col-lg-6 col-xl-4 py-5 d-flex">
-                <div class="card text-black flex-fill">
-                    <img src="@product.ImageUrl" class="card-img-top"
-                        alt="@product.Name" />
-                    <div class="card-body d-flex flex-column">
-                        <div class="text-center">
-                            <h5 class="card-title">@product.Name</h5>
-                            <p class="text-muted mb-4">@product.CategoryName</p>
-                        </div>
-                        <div class="mt-auto">
-                            <div class="d-flex justify-content-between">
-                                <span>@product.Description</span><span>$@product.Price</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer text-end">
-                        <button class="btn btn-primary mt-3" @onclick="async () => await AddToCart(product)">Add to Cart</button>
-                    </div>
-                </div>
+            <div class="col-md-3 col-lg-6 col-xl-3 py-5 d-flex">
+                <Card Class="mb-4" Style="width:18rem;">
+                    <img class="rounded-top" src="@product.ImageUrl" alt="@product.Name" />
+                    <CardBody>
+                        <CardTitle>@product.Name</CardTitle>
+                        <CardSubTitle Class="mb-2 text-muted">@product.CategoryName</CardSubTitle>
+                        <CardText><span>@product.Description</span><span>$@product.Price</span></CardText>
+                    </CardBody>
+                    <CardFooter Class="text-end">
+                        <Button Color="ButtonColor.Primary" @onclick="async () => await AddToCart(product)"><i class="bi bi-cart-plus-fill"></i></Button>
+                    </CardFooter>
+                </Card>
             </div>
         }
     }
     else
     {
-        <p><em>Loading...</em></p>
+        <Spinner Type="SpinnerType.Dots" Class="me-3" Color="SpinnerColor.Primary" />
     }
 </div>
 
