@@ -2,7 +2,7 @@ namespace StudyMart.Web.States;
 
 public class CartContainer
 {
-    public event Action OnChange;
+    public event Action? OnChange;
     public int TotalItems = 0;
 
     public void AddToCart()

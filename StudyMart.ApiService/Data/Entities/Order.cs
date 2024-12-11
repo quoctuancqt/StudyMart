@@ -19,9 +19,9 @@ public class Order
     public decimal TotalAmount { get; set; }
 
     [Required]
-    public OrderStatus Status { get; set; } = OrderStatus.Pending; 
+    public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
-    public string UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
 
     // Navigation Property
     public ICollection<OrderItem>? OrderItems { get; set; }

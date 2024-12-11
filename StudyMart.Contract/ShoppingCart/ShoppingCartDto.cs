@@ -1,5 +1,15 @@
 namespace StudyMart.Contract.ShoppingCart;
 
-public record ShoppingCartDto(int Id, IList<CartItemDto> CartItems);
+public class ShoppingCartDto
+{
+    public int Id { get; set; }
+    public List<CartItemDto>? CartItems { get; set; }
+}
 
-public  record CartItemDto(int Quantity, string Name, decimal Price);
+public class CartItemDto
+{
+    public int Quantity { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public decimal Price { get; set; }
+    public int ProductId { get; set; }
+}

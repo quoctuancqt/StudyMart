@@ -1,5 +1,4 @@
-using System;
-using StudyMart.Web.ViewModels;
+using StudyMart.Contract.Product;
 
 namespace StudyMart.Web.Services;
 
@@ -8,25 +7,25 @@ public class ProductService(IHttpClientFactory httpClientFactory)
     private readonly HttpClient _httpClient = httpClientFactory.CreateClient("StudyMartApi");
     private const string BaseUrl = "/api/products";
 
-    public async Task<List<Product>> GetProductsAsync()
+    public async Task<List<ProductDto>> GetProductsAsync()
     {
-        var products = await _httpClient.GetFromJsonAsync<List<Product>>(BaseUrl);
+        var products = await _httpClient.GetFromJsonAsync<List<ProductDto>>(BaseUrl);
         return products ?? [];
     }
 
-    public async Task<Product> GetProductByIdAsync(int id)
+    public async Task<ProductDto?> GetProductByIdAsync(int id)
     {
-        var product = await _httpClient.GetFromJsonAsync<Product>($"{BaseUrl}/{id}");
-        return product ?? new Product();
+        var product = await _httpClient.GetFromJsonAsync<ProductDto>($"{BaseUrl}/{id}");
+        return product;
     }
 
-    public async Task AddProductAsync(Product product)
+    public async Task AddProductAsync(ProductDto product)
     {
         var responseMessage= await _httpClient.PostAsJsonAsync(BaseUrl, product);
         responseMessage.EnsureSuccessStatusCode();
     }
 
-    public async Task UpdateProductAsync(Product product)
+    public async Task UpdateProductAsync(ProductDto product)
     {
         var responseMessage = await _httpClient.PutAsJsonAsync($"{BaseUrl}/{product.Id}", product);
         responseMessage.EnsureSuccessStatusCode();

@@ -1,8 +1,8 @@
 ﻿@page "/category"
 @using Microsoft.AspNetCore.Authorization
 @using StudyMart.Web.Services
-@using StudyMart.Web.ViewModels
 @using Microsoft.AspNetCore.Components.QuickGrid
+@using StudyMart.Contract.Category
 @inject CategoryService CategoryService
 @attribute [Authorize]
 @rendermode InteractiveServer
@@ -37,9 +37,9 @@ else
 }
 
 @code {
-    private List<ViewModels.Category>? _categories;
+    private List<CategoryDto>? _categories;
     [SupplyParameterFromForm]
-    private ViewModels.Category? CurrentCategory { get; set; }
+    private CategoryDto? CurrentCategory { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -47,7 +47,7 @@ else
         CurrentCategory ??= new();
     }
 
-    private void EditCategory(ViewModels.Category category)
+    private void EditCategory(CategoryDto category)
     {
         CurrentCategory = category;
     }

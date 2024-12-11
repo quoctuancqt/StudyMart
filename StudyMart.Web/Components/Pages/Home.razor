@@ -1,11 +1,13 @@
 ﻿@page "/"
+@using StudyMart.Contract.Product
+@using StudyMart.Contract.ShoppingCart
 @using StudyMart.Web.Services
 @using StudyMart.Web.States
-@using StudyMart.Web.ViewModels
 @inject ProductService ProductService
 @inject ProtectedLocalStorage ProtectedLocalStorage
 @inject CartContainer CartContainer
 @rendermode InteractiveServer
+@attribute [OutputCache(Duration = 10)]
 
 <PageTitle>Home</PageTitle>
 
@@ -37,7 +39,7 @@
 
 @code
 {
-    private List<Product>? _products;
+    private List<ProductDto>? _products;
 
 
     protected override async Task OnInitializedAsync()
@@ -45,11 +47,11 @@
         _products = await ProductService.GetProductsAsync();
     }
 
-    private async Task AddToCart(Product product)
+    private async Task AddToCart(ProductDto product)
     {
-        var result = await ProtectedLocalStorage.GetAsync<List<CartItem>>("cart");
+        var result = await ProtectedLocalStorage.GetAsync<List<CartItemDto>>("cart");
         
-        List<CartItem> items;
+        List<CartItemDto> items;
         
         if (result.Success)
         {
@@ -61,7 +63,7 @@
             }
             else
             {
-                items.Add(new CartItem
+                items.Add(new CartItemDto
                 {
                     ProductId = product.Id,
                     Name = product.Name,
@@ -74,7 +76,7 @@
         {
             items =
             [
-                new CartItem
+                new CartItemDto
                 {
                     ProductId = product.Id,
                     Name = product.Name,

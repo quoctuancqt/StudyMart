@@ -1,10 +1,13 @@
 @page "/cart"
-@using StudyMart.Web.ViewModels
 @using Microsoft.AspNetCore.Components.QuickGrid
+@using StudyMart.Contract.ShoppingCart
+@using StudyMart.Web.Services
 @using StudyMart.Web.States
 @inject ProtectedLocalStorage ProtectedLocalStorage
 @inject CartContainer CartContainer
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject CartService CartService
 
 @if (_cartItems?.Count == 0 || _cartItems is null)
 {
@@ -29,7 +32,7 @@ else
 }
 
 @code {
-    private List<CartItem>? _cartItems;
+    private List<CartItemDto>? _cartItems;
     private ConfirmDialog dialog;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -43,7 +46,7 @@ else
 
     private async Task LoadStateAsync()
     {
-        var result = await ProtectedLocalStorage.GetAsync<List<CartItem>>("cart");
+        var result = await ProtectedLocalStorage.GetAsync<List<CartItemDto>>("cart");
         _cartItems = result is { Success: true, Value: not null } ? result.Value : [];
     }
 
@@ -73,10 +76,26 @@ else
         }
     }
 
-    private void CheckOut()
+    private async Task CheckOut()
     {
-        // navigate to checkout page
-        NavigationManager.NavigateTo("checkout");
+        var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authenticationState.User;
+
+        if (user.Identity is { IsAuthenticated: true })
+        {
+            await CartService.AddToCartAsync(_cartItems!.Select(item => new AddToCartDto()
+            {
+                ProductId = item.ProductId,
+                Quantity = item.Quantity
+            }).ToList());
+            // navigate to checkout page
+            NavigationManager.NavigateTo("checkout");
+        }
+        else
+        {
+            // TODO: Display a message to the user to login first
+            NavigationManager.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}", forceLoad: true);
+        }
     }
 
 }

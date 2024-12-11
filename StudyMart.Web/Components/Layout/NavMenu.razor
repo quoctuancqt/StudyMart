@@ -1,5 +1,5 @@
-﻿@using StudyMart.Web.States
-@using StudyMart.Web.ViewModels
+﻿@using StudyMart.Contract.ShoppingCart
+@using StudyMart.Web.States
 @inject CartContainer CartContainer
 @inject ProtectedLocalStorage ProtectedLocalStorage
 @implements IDisposable
@@ -64,8 +64,8 @@
     protected override async Task OnInitializedAsync()
     {
         CartContainer.OnChange += StateHasChanged;
-        var result = await ProtectedLocalStorage.GetAsync<List<CartItem>>("cart");
-        var cartItems = result.Value ?? new List<CartItem>();
+        var result = await ProtectedLocalStorage.GetAsync<List<CartItemDto>>("cart");
+        var cartItems = result.Value ?? new List<CartItemDto>();
         CartContainer.TotalItems = cartItems.Sum(c => c.Quantity);
     }
 

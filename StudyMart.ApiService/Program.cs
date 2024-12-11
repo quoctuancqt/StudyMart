@@ -17,6 +17,8 @@ builder.AddServiceDefaults();
 
 builder.AddNpgsqlDbContext<AppDbContext>("postgresqldb");
 
+builder.AddRedisDistributedCache("cache");
+
 // Add services to the container.
 builder.Services.AddProblemDetails();
 

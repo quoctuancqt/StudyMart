@@ -16,6 +16,7 @@
     <PackageVersion Include="Aspire.Hosting.Testing" Version="9.0.0" />
     <PackageVersion Include="Aspire.Keycloak.Authentication" Version="9.0.0-preview.5.24551.3" />
     <PackageVersion Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
+    <PackageVersion Include="Aspire.StackExchange.Redis.DistributedCaching" Version="9.0.0" />
     <PackageVersion Include="Aspire.StackExchange.Redis.OutputCaching" Version="9.0.0" />
     <PackageVersion Include="Blazor.Bootstrap" Version="3.2.0" />
     <PackageVersion Include="MailKit" Version="4.8.0" />

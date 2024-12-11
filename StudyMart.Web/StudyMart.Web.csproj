@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StudyMart.Contract\StudyMart.Contract.csproj" />
     <ProjectReference Include="..\StudyMart.ServiceDefaults\StudyMart.ServiceDefaults.csproj" />
   </ItemGroup>
   <ItemGroup>

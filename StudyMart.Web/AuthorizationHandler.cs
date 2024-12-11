@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace StudyMart.Web;
 
-public class AuthorizationHandler(IHttpContextAccessor httpContextAccessor, IServiceProvider provider) : DelegatingHandler
+public class AuthorizationHandler(IHttpContextAccessor httpContextAccessor) : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {

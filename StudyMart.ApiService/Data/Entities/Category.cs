@@ -22,6 +22,11 @@ public class Category : ISoftDeletable
     public bool IsDeleted { get; set; }
 
     public ICollection<Product>? Products { get; set; }
-    
-    public CategoryDto ToDto() => new(CategoryId, Name, Description);
+
+    public CategoryDto ToDto() => new()
+    {
+        Id = CategoryId,
+        Name = Name,
+        Description = Description
+    };
 }

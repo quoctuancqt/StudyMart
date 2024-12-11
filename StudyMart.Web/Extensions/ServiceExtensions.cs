@@ -10,6 +10,7 @@ public static class ServiceExtensions
         builder.Services.AddLogging();
         builder.Services.AddScoped<CategoryService>();
         builder.Services.AddScoped<ProductService>();
+        builder.Services.AddScoped<CartService>();
         
         builder.Services.AddScoped<CartContainer>();
 

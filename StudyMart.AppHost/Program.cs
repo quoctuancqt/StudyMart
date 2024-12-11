@@ -23,6 +23,8 @@ var keycloak = builder.AddKeycloak("keycloak", 8080)
 var apiService = builder.AddProject<Projects.StudyMart_ApiService>("apiservice")
     .WithReference(keycloak)
     .WaitFor(keycloak)
+    .WithReference(cache)
+    .WaitFor(cache)
     .WithReference(mailDev)
     .WithReference(posgresqldb).WaitFor(posgresqldb);
 
