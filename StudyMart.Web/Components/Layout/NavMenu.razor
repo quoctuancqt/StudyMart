@@ -3,6 +3,7 @@
 @inject CartContainer CartContainer
 @inject ProtectedLocalStorage ProtectedLocalStorage
 @implements IDisposable
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -28,11 +29,14 @@
         </div>
         <AuthorizeView>
             <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="category">
-                        <i class="bi bi-card-list" aria-hidden="true"></i> Categories
-                    </NavLink>
-                </div>
+                @if ((_authenticationState?.User.IsInRole("Administrator") ?? false) && _authenticationState?.User.Identity?.IsAuthenticated == true)
+                {
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="category">
+                            <i class="bi bi-card-list" aria-hidden="true"></i> Categories
+                        </NavLink>
+                    </div>
+                }
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="my-orders">
                         <i class="bi bi-box" aria-hidden="true"></i> My Orders
@@ -40,7 +44,7 @@
                 </div>
                 <div class="nav-item px-3">
                     <form action="/authentication/logout" method="post" @formname="logout-form" id="logout-form">
-                        <AntiforgeryToken />
+                        <AntiforgeryToken/>
                         <NavLink class="nav-link" href="#" onclick="document.getElementById('logout-form').submit(); return false;">
                             <i class="bi bi-box-arrow-right" aria-hidden="true" style="margin-right:0.5rem;"></i> Sign out
                         </NavLink>
@@ -61,8 +65,11 @@
 
 @code
 {
+    private AuthenticationState? _authenticationState;
+    
     protected override async Task OnInitializedAsync()
     {
+        _authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         CartContainer.OnChange += StateHasChanged;
         var result = await ProtectedLocalStorage.GetAsync<List<CartItemDto>>("cart");
         var cartItems = result.Value ?? new List<CartItemDto>();

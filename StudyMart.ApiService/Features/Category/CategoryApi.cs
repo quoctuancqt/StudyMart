@@ -14,7 +14,7 @@ internal static class CategoryApi
         var group = routes.MapGroup("api/categories")
             .WithTags("Categories");
 
-        group.RequireAuthorization();
+        group.RequireAuthorization(config => config.RequireRole("Administrator"));
 
         // Validate the parameters
         group.WithParameterValidation(typeof(CreateOrUpdateCategoryDto));
