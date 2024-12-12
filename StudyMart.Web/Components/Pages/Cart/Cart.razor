@@ -93,7 +93,6 @@ else
         }
         else
         {
-            // TODO: Display a message to the user to login first
             NavigationManager.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}", forceLoad: true);
         }
     }

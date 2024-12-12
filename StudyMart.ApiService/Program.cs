@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -32,7 +33,7 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Study Mart API",
         Version = "v1"
     });
-
+    
     // Define the OAuth2.0 scheme that's in use (i.e. Implicit Flow)
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
@@ -65,6 +66,15 @@ builder.Services.AddSwaggerGen(options =>
     
     options.SchemaFilter<SwaggerExcludeFilter>();
     options.DocumentFilter<SwaggerExcludeFilter>();
+});
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
 // Add services to the container.

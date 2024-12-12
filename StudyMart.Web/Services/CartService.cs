@@ -13,9 +13,9 @@ public class CartService(IHttpClientFactory httpClientFactory)
         return cart;
     }
 
-    public async Task AddToCartAsync(IEnumerable<AddToCartDto> cartItems)
+    public async Task<bool> AddToCartAsync(IEnumerable<AddToCartDto> cartItems)
     {
         var responseMessage = await _httpClient.PostAsJsonAsync($"{BaseUrl}/batch", cartItems);
-        responseMessage.EnsureSuccessStatusCode();
+        return responseMessage.IsSuccessStatusCode;
     }
 }
