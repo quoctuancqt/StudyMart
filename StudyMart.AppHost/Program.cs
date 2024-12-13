@@ -40,6 +40,4 @@ builder.AddProject<Projects.StudyMart_Web>("webfrontend")
 builder.SubscribeAppHostEvent();
 builder.SubscribeResourceEvent(cache.Resource);
 
-apiService.WithEnvironment("SCALAR_SERVER_URL", apiService.GetEndpoint("https"));
-
 builder.Build().Run();
