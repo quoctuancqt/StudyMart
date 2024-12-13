@@ -17,8 +17,6 @@ public class AuthorizationHandler(IHttpContextAccessor httpContextAccessor) : De
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
         
-        var refreshToken = await httpContext.GetTokenAsync("refresh_token");
-
         return await base.SendAsync(request, cancellationToken);
     }
 }
