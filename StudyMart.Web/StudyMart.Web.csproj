@@ -12,6 +12,7 @@
     <PackageReference Include="Aspire.Keycloak.Authentication" />
     <PackageReference Include="Aspire.StackExchange.Redis.OutputCaching" />
     <PackageReference Include="Blazor.Bootstrap" />
+    <PackageReference Include="IdentityModel.OidcClient" />
     <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid" />
   </ItemGroup>
   <ItemGroup>
