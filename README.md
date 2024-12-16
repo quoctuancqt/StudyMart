@@ -1,4 +1,5 @@
 # Study Mart
+![Code Coverage](https://img.shields.io/badge/Code%20Coverage-85%25-success?style=flat)
 > Notice: This is just a demo of how can we build and deploy the microservices approach.
 - [x] Built on .NET 9.0 STS
 - [x] Aspire 9
