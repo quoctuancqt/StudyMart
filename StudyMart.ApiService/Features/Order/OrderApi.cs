@@ -83,6 +83,8 @@ internal static class OrderApi
                 };
                 db.OrderItems.Add(orderItem);
             }
+            
+            db.ShoppingCarts.Remove(cart);
 
             await db.SaveChangesAsync();
             

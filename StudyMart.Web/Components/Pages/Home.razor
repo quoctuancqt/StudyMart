@@ -21,8 +21,8 @@
                     <img class="rounded-top" src="@product.ImageUrl" alt="@product.Name" />
                     <CardBody>
                         <CardTitle>@product.Name</CardTitle>
-                        <CardSubTitle Class="mb-2 text-muted">@product.CategoryName</CardSubTitle>
-                        <CardText><span>@product.Description</span><span>$@product.Price</span></CardText>
+                        <CardSubTitle Class="mb-2 text-muted">#@product.CategoryName</CardSubTitle>
+                        <CardText><p>@product.Description</p><p>$@product.Price</p></CardText>
                     </CardBody>
                     <CardFooter Class="text-end">
                         <Button Color="ButtonColor.Primary" @onclick="async () => await AddToCart(product)"><i class="bi bi-cart-plus-fill"></i></Button>

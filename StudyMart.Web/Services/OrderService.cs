@@ -1,41 +1,25 @@
-using System.Text;
-using System.Text.Json;
+using StudyMart.Contract.Clients;
 using StudyMart.Contract.Order;
 
 namespace StudyMart.Web.Services;
 
-public class OrderService(IHttpClientFactory httpClientFactory)
+public class OrderService(ApiClient apiClient)
 {
-    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("StudyMartApi");
-    private const string BaseUrl = "/api/orders";
+    private readonly IOrderClient _orderClient = apiClient.OrderClient;
     
     public async Task<IEnumerable<OrderDto>> GetOrdersAsync()
     {
-        var orders = await _httpClient.GetFromJsonAsync<IEnumerable<OrderDto>>(BaseUrl);
+        var orders = await _orderClient.GetOrdersAsync();
         return orders ?? [];
     }
-    
-    public async Task<OrderDto?> GetOrderAsync(int id)
-    {
-        var response = await _httpClient.GetAsync($"{BaseUrl}/{id}");
-        if (!response.IsSuccessStatusCode) return null;
-        
-        var content = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<OrderDto>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-    }
+
+    public async Task<OrderDto?> GetOrderAsync(int id) => await _orderClient.GetOrderByIdAsync(id);
     
     public async Task<bool> CancelOrderAsync(int id)
     {
-        var response = await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
+        var response = await _orderClient.DeleteOrderAsync(id);
         return response.IsSuccessStatusCode;
     }
     
-    public async Task<OrderDto?> CreateOrderAsync(CreateOrderDto dto)
-    {
-        var response = await _httpClient.PostAsJsonAsync(BaseUrl, dto);
-        if (!response.IsSuccessStatusCode) return null;
-        
-        var responseContent = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<OrderDto>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-    }
+    public async Task<OrderDto?> CreateOrderAsync(CreateOrderDto dto) =>  await _orderClient.CreateOrderAsync(dto);
 }

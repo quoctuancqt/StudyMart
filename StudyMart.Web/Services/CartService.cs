@@ -1,21 +1,21 @@
+using StudyMart.Contract.Clients;
 using StudyMart.Contract.ShoppingCart;
 
 namespace StudyMart.Web.Services;
 
-public class CartService(IHttpClientFactory httpClientFactory)
+public class CartService(ApiClient apiClient)
 {
-    private readonly HttpClient _httpClient = httpClientFactory.CreateClient("StudyMartApi");
-    private const string BaseUrl = "/api/shopping-carts";
+    private readonly ICartClient _cartClient = apiClient.CartClient;
 
     public async Task<ShoppingCartDto?> GetCartAsync()
     {
-        var cart = await _httpClient.GetFromJsonAsync<ShoppingCartDto>(BaseUrl);
+        var cart = await _cartClient.GetCartAsync();
         return cart;
     }
 
     public async Task<bool> AddToCartAsync(IEnumerable<AddToCartDto> cartItems)
     {
-        var responseMessage = await _httpClient.PostAsJsonAsync($"{BaseUrl}/batch", cartItems);
-        return responseMessage.IsSuccessStatusCode;
+        var response = await _cartClient.AddToCartAsync(cartItems);
+        return response.IsSuccessStatusCode;
     }
 }
