@@ -1,6 +1,2 @@
-namespace StudyMart.ApiService.Test;
-
-public class GlobalUsings
-{
-    
-}
+global using Microsoft.AspNetCore.Mvc.Testing;
+global using Microsoft.AspNetCore.TestHost;

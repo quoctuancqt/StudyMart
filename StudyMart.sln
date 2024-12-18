@@ -5,8 +5,6 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMart.ApiService", "StudyMart.ApiService\StudyMart.ApiService.csproj", "{F1047542-D9BC-4859-B260-2FAE0CC8818B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMart.Tests", "StudyMart.Tests\StudyMart.Tests.csproj", "{088A45FB-39A6-41C6-8045-FB22A3F73031}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMart.Web", "StudyMart.Web\StudyMart.Web.csproj", "{D1D7E83B-B837-4D4C-9F84-A6DCCD97B928}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyMart.ServiceDefaults", "StudyMart.ServiceDefaults\StudyMart.ServiceDefaults.csproj", "{52144F80-DA24-4F76-B482-B6385E7421CD}"
@@ -19,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMart.MailKit.Client", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMart.Contract", "StudyMart.Contract\StudyMart.Contract.csproj", "{69443DA5-3DA9-415A-A3E1-8F3889B72850}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E2D2A568-DAEC-4F43-BC98-D7B68EDA7023}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMart.ApiService.Test", "StudyMart.ApiService.Test\StudyMart.ApiService.Test.csproj", "{D3A37DA9-664B-4317-959D-1934BC6D2B32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +31,6 @@ Global
 		{F1047542-D9BC-4859-B260-2FAE0CC8818B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1047542-D9BC-4859-B260-2FAE0CC8818B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1047542-D9BC-4859-B260-2FAE0CC8818B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{088A45FB-39A6-41C6-8045-FB22A3F73031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{088A45FB-39A6-41C6-8045-FB22A3F73031}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{088A45FB-39A6-41C6-8045-FB22A3F73031}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{088A45FB-39A6-41C6-8045-FB22A3F73031}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1D7E83B-B837-4D4C-9F84-A6DCCD97B928}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D1D7E83B-B837-4D4C-9F84-A6DCCD97B928}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1D7E83B-B837-4D4C-9F84-A6DCCD97B928}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,11 +55,18 @@ Global
 		{69443DA5-3DA9-415A-A3E1-8F3889B72850}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69443DA5-3DA9-415A-A3E1-8F3889B72850}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69443DA5-3DA9-415A-A3E1-8F3889B72850}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A37DA9-664B-4317-959D-1934BC6D2B32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A37DA9-664B-4317-959D-1934BC6D2B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A37DA9-664B-4317-959D-1934BC6D2B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A37DA9-664B-4317-959D-1934BC6D2B32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9DD99F21-D719-4F0E-94FD-9119B3D3AA17}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3A37DA9-664B-4317-959D-1934BC6D2B32} = {E2D2A568-DAEC-4F43-BC98-D7B68EDA7023}
 	EndGlobalSection
 EndGlobal

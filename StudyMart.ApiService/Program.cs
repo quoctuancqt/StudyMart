@@ -123,6 +123,7 @@ if (app.Environment.IsDevelopment())
     var scope = app.Services.CreateAsyncScope();
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await dbContext.Database.MigrateAsync();
+    await dbContext.SeedData();
 }
 
 app.UseAuthentication();
