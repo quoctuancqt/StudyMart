@@ -31,6 +31,7 @@ public class ApiFixture : WebApplicationFactory<Program>, IAsyncLifetime
     {
         var options = new DistributedApplicationOptions { AssemblyName = typeof(ApiFixture).Assembly.FullName, DisableDashboard = true };
         var appBuilder = DistributedApplication.CreateBuilder(options);
+
         PostgresSrv = appBuilder.AddPostgres("postgresql");
         Postgres = PostgresSrv.AddDatabase("postgresqldb");
         Keycloak = appBuilder.AddKeycloak("keycloak");
@@ -60,6 +61,7 @@ public class ApiFixture : WebApplicationFactory<Program>, IAsyncLifetime
     {
         await _app.StartAsync();
         var connectionString = Postgres.Resource.ConnectionStringExpression.ValueExpression.Replace("{postgresql.connectionString}", await PostgresSrv.Resource.GetConnectionStringAsync());
+        Console.WriteLine("connectionString: " + connectionString);
         _postgresConnectionString = connectionString;
         _keycloakConnectionString = Keycloak.GetEndpoint("http").Url;
         _mailDevConnectionString = MailDev.GetEndpoint("http").Url;
