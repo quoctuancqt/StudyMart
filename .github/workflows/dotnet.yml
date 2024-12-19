@@ -34,7 +34,7 @@ jobs:
 
     - run: dotnet tool update --global dotnet-coverage
 
-    - run: dotnet-coverage merge --output TestResults/coverage.cobertura.xml --output-format cobertura "TestResults/**/*.coverage"
+    - run: dotnet-coverage merge --output ./TestResults/coverage.cobertura.xml --output-format cobertura "TestResults/**/*.coverage"
 
     - name: Create Test Coverage Badge
       uses: simon-k/dotnet-code-coverage-badge@v1.0.0
