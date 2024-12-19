@@ -30,7 +30,8 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Test
-      run: dotnet test --no-build --settings tests.runsettings -p:CoverletOutput=TestResults/ -p:CollectCoverage=true
+      # run: dotnet test --no-build --settings tests.runsettings -p:CoverletOutput=TestResults/ -p:CollectCoverage=true
+      run: dotnet test --no-build --collect:"XPlat Code Coverage" --output ./coverage-reports --format cobertura,opencover
 
     - name: Create Test Coverage Badge
       uses: simon-k/dotnet-code-coverage-badge@v1.0.0
@@ -38,7 +39,7 @@ jobs:
       with:
         label: Unit Test Coverage
         color: brightgreen
-        path: ${{ github.workspace }}/TestResults/**/coverage.opencover.xml
+        path: ${{ github.workspace }}/TestResults/coverage-reports/coverage.opencover.xml
         gist-filename: code-coverage.yml
         gist-id: fcc685f7c142827e7a2c5b7243129491
         gist-auth-token: ${{ secrets.PAT }}
