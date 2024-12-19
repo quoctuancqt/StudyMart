@@ -1,5 +1,5 @@
 # Study Mart
-![Code Coverage](https://img.shields.io/badge/Code%20Coverage-85%25-success?style=flat)
++ [![cov](https://<you>.github.io/<repo>/badges/coverage.svg)](https://github.com/quoctuancqt/StudyMart/actions)
 > Notice: This is just a demo of how can we build and deploy the microservices approach.
 - [x] Built on .NET 9.0 STS
 - [x] Aspire 9
