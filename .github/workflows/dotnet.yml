@@ -32,17 +32,13 @@ jobs:
     - name: Test
       run: dotnet test --no-build --settings tests.runsettings -p:CoverletOutput=TestResults/ -p:CollectCoverage=true
 
-    - run: dotnet tool update --global dotnet-coverage
-
-    - run: dotnet-coverage merge --output TestResults/coverage.cobertura.xml --output-format cobertura "TestResults/**/*.coverage"
-
     - name: Create Test Coverage Badge
       uses: simon-k/dotnet-code-coverage-badge@v1.0.0
       id: create_coverage_badge
       with:
         label: Unit Test Coverage
         color: brightgreen
-        path: ${{ github.workspace }}/TestResults/coverage.cobertura.xml
+        path: ${{ github.workspace }}/TestResults/**/coverage.opencover.xml
         gist-filename: code-coverage.yml
         gist-id: fcc685f7c142827e7a2c5b7243129491
         gist-auth-token: ${{ secrets.PAT }}
