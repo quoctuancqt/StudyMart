@@ -33,7 +33,7 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Study Mart API",
         Version = "v1"
     });
-    
+
     // Define the OAuth2.0 scheme that's in use (i.e. Implicit Flow)
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
@@ -52,7 +52,7 @@ builder.Services.AddSwaggerGen(options =>
             }
         }
     });
-    
+
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -63,7 +63,7 @@ builder.Services.AddSwaggerGen(options =>
             ["openid", "profile", "offline_access"]
         }
     });
-    
+
     options.SchemaFilter<SwaggerExcludeFilter>();
     options.DocumentFilter<SwaggerExcludeFilter>();
 });
@@ -120,10 +120,15 @@ if (app.Environment.IsDevelopment())
         options.OAuthScopes("openid", "profile", "offline_access");
     });
 
-    var scope = app.Services.CreateAsyncScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await dbContext.Database.MigrateAsync();
-    await dbContext.SeedData();
+    var scope = app.Services.CreateScope();
+    var scopeServices = scope.ServiceProvider;
+    var dbContext = scopeServices.GetRequiredService<AppDbContext>();
+    var strategy = dbContext.Database.CreateExecutionStrategy();
+    await strategy.ExecuteAsync(async () =>
+    {
+        await dbContext.Database.MigrateAsync();
+        await dbContext.SeedData();
+    });
 }
 
 app.UseAuthentication();
