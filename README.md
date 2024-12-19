@@ -6,11 +6,11 @@
 - [x] Microservices architectural style
 - [x] Follows Vertical Sliding principles
 - [ ] Domain Driven Design building blocks
-- [ ] CQRS with MediatR and Fluent Validations
+- [ ] CQRS with MediatR ~and Fluent Validations~
 - [x] Shift-left Observability with .NET Aspire (OpenTelemetry built-in)
 - [x] OpenAPI supports
 - [ ] API Versioning
-- [x] Integration test with .NET Aspire
+- [x] Integration test with .NET Aspire ~and Wiremock.Net~
 - [x] Run it on GitHub Actions and output code coverage
 - [ ] Microsoft.Extensions.AI (Ollama for local dev and Azure OpenAI service)
 - [x] Response Caching - Distributed Caching with Redis
