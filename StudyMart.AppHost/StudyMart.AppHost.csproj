@@ -19,4 +19,10 @@
     <PackageReference Include="Aspire.Hosting.PostgreSQL" />
     <PackageReference Include="Aspire.Hosting.Redis" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="realms\study-mart.json" />
+    <Content Include="realms\study-mart.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

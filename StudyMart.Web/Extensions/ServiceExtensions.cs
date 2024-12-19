@@ -17,4 +17,18 @@ public static class ServiceExtensions
 
         return builder;
     }
+    
+    public static TBuilder AddApiClient<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+    {
+        builder.Services.AddHttpClient(nameof(ApiClient), client =>
+            {
+                // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
+                // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
+                client.BaseAddress = new Uri("https+http://apiservice");
+            })
+            .AddHttpMessageHandler<AuthorizationHandler>();
+        builder.Services.AddScoped<ApiClient>();
+
+        return builder;
+    }
 }

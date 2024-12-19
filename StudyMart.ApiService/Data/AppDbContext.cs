@@ -104,11 +104,11 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         var products = new List<Product>
         {
-            new() { Name = "Laptop", Description = "A laptop for all your needs", Price = 1000, CategoryId = 1 },
-            new() { Name = "Mobile Phone", Description = "A mobile phone for all your needs", Price = 500, CategoryId = 1 },
-            new() { Name = "Headphones", Description = "Headphones for all your needs", Price = 100, CategoryId = 1 },
-            new() { Name = "Book", Description = "A book for all your needs", Price = 10, CategoryId = 2 },
-            new() { Name = "T-Shirt", Description = "A t-shirt for all your needs", Price = 20, CategoryId = 3 }
+            new() { Name = "Laptop", Description = "A laptop for all your needs", Price = 1000, CategoryId = 1, ImageUrl = "https://picsum.photos/300/300" },
+            new() { Name = "Mobile Phone", Description = "A mobile phone for all your needs", Price = 500, CategoryId = 1, ImageUrl = "https://picsum.photos/300/300"},
+            new() { Name = "Headphones", Description = "Headphones for all your needs", Price = 100, CategoryId = 1, ImageUrl = "https://picsum.photos/300/300"},
+            new() { Name = "Book", Description = "A book for all your needs", Price = 10, CategoryId = 2, ImageUrl = "https://picsum.photos/300/300"},
+            new() { Name = "T-Shirt", Description = "A t-shirt for all your needs", Price = 20, CategoryId = 3, ImageUrl = "https://picsum.photos/300/300"}
         };
 
         await Products.AddRangeAsync(products);

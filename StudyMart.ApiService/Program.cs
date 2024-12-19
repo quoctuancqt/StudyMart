@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using StudyMart.ApiService.Authorization;
 using StudyMart.ApiService.Data;
+using StudyMart.ApiService.Extensions;
 using StudyMart.ApiService.Features.Category;
 using StudyMart.ApiService.Features.Order;
 using StudyMart.ApiService.Features.Product;
@@ -17,6 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.AddNpgsqlDbContext<AppDbContext>("postgresqldb");
+
+builder.Services.AddMigration<AppDbContext, AppDbContextSeed>();
 
 builder.AddRedisDistributedCache("cache");
 
@@ -33,7 +36,7 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Study Mart API",
         Version = "v1"
     });
-    
+
     // Define the OAuth2.0 scheme that's in use (i.e. Implicit Flow)
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {
@@ -52,7 +55,7 @@ builder.Services.AddSwaggerGen(options =>
             }
         }
     });
-    
+
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -63,7 +66,7 @@ builder.Services.AddSwaggerGen(options =>
             ["openid", "profile", "offline_access"]
         }
     });
-    
+
     options.SchemaFilter<SwaggerExcludeFilter>();
     options.DocumentFilter<SwaggerExcludeFilter>();
 });
@@ -120,9 +123,15 @@ if (app.Environment.IsDevelopment())
         options.OAuthScopes("openid", "profile", "offline_access");
     });
 
-    var scope = app.Services.CreateAsyncScope();
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await dbContext.Database.MigrateAsync();
+    // var scope = app.Services.CreateScope();
+    // var scopeServices = scope.ServiceProvider;
+    // var dbContext = scopeServices.GetRequiredService<AppDbContext>();
+    // var strategy = dbContext.Database.CreateExecutionStrategy();
+    // await strategy.ExecuteAsync(async () =>
+    // {
+    //     await dbContext.Database.MigrateAsync();
+    //     await dbContext.SeedData();
+    // });
 }
 
 app.UseAuthentication();
