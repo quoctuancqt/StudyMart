@@ -40,7 +40,7 @@ jobs:
       with:
         label: Unit Test Coverage
         color: brightgreen
-        path: ${{ steps.test.outputs }}
+        path: ${{ steps.test.outputs[1] }}
         gist-filename: code-coverage.yml
         gist-id: fcc685f7c142827e7a2c5b7243129491
         gist-auth-token: ${{ secrets.PAT }}
