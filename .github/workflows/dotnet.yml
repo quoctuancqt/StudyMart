@@ -43,3 +43,5 @@ jobs:
       with:
         recreate: true
         path: code-coverage-results.md
+        message: |
+          Release ${{ github.sha }}: Code coverage results
