@@ -10,8 +10,8 @@
 - [x] Shift-left Observability with .NET Aspire (OpenTelemetry built-in)
 - [x] OpenAPI supports
 - [ ] API Versioning
-- [ ] Integration test with .NET Aspire and Wiremock.NET
-- [ ] Run it on GitHub Actions and output code coverage
+- [x] Integration test with .NET Aspire
+- [x] Run it on GitHub Actions and output code coverage
 - [ ] Microsoft.Extensions.AI (Ollama for local dev and Azure OpenAI service)
 - [x] Response Caching - Distributed Caching with Redis
 - [x] JWT & Authentication with Keycloak
