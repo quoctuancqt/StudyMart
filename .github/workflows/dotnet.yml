@@ -30,7 +30,7 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Test
-      run: dotnet test --no-build --settings tests.runsettings --results-directory ./coverage
+      run: dotnet test --no-build --settings tests.runsettings --results-directory coverage
 
     - name: Create Test Coverage Badge
       uses: simon-k/dotnet-code-coverage-badge@v1.0.0
@@ -38,7 +38,7 @@ jobs:
       with:
         label: Unit Test Coverage
         color: brightgreen
-        path: ./coverage/coverage.opencover.xml
+        path: StudyMart.ApiService/coverage/coverage.opencover.xml
         gist-filename: code-coverage.yml
         gist-id: fcc685f7c142827e7a2c5b7243129491
         gist-auth-token: ${{ secrets.PAT }}
