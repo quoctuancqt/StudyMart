@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using StudyMart.ApiService.Authorization;
 using StudyMart.ApiService.Data;
+using StudyMart.ApiService.Extensions;
 using StudyMart.ApiService.Features.Category;
 using StudyMart.ApiService.Features.Order;
 using StudyMart.ApiService.Features.Product;
@@ -17,6 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.AddNpgsqlDbContext<AppDbContext>("postgresqldb");
+
+builder.Services.AddMigration<AppDbContext, AppDbContextSeed>();
 
 builder.AddRedisDistributedCache("cache");
 
@@ -120,15 +123,15 @@ if (app.Environment.IsDevelopment())
         options.OAuthScopes("openid", "profile", "offline_access");
     });
 
-    var scope = app.Services.CreateScope();
-    var scopeServices = scope.ServiceProvider;
-    var dbContext = scopeServices.GetRequiredService<AppDbContext>();
-    var strategy = dbContext.Database.CreateExecutionStrategy();
-    await strategy.ExecuteAsync(async () =>
-    {
-        await dbContext.Database.MigrateAsync();
-        await dbContext.SeedData();
-    });
+    // var scope = app.Services.CreateScope();
+    // var scopeServices = scope.ServiceProvider;
+    // var dbContext = scopeServices.GetRequiredService<AppDbContext>();
+    // var strategy = dbContext.Database.CreateExecutionStrategy();
+    // await strategy.ExecuteAsync(async () =>
+    // {
+    //     await dbContext.Database.MigrateAsync();
+    //     await dbContext.SeedData();
+    // });
 }
 
 app.UseAuthentication();
