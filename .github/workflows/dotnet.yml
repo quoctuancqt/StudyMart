@@ -38,7 +38,7 @@ jobs:
       with:
         label: Unit Test Coverage
         color: brightgreen
-        path: tudyMart.ApiService.Test/TestResults/*/coverage.opencover.xml
+        path: StudyMart.ApiService.Test/TestResults/*/coverage.opencover.xml
         gist-filename: code-coverage.yml
         gist-id: fcc685f7c142827e7a2c5b7243129491
         gist-auth-token: ${{ secrets.PAT }}
