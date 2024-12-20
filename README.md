@@ -10,7 +10,7 @@
 - [ ] CQRS with MediatR and Fluent Validations
 - [x] Shift-left Observability with .NET Aspire (OpenTelemetry built-in)
 - [x] OpenAPI supports
-- [ ] API Versioning
+- [x] API Versioning
 - [x] Integration test with .NET Aspire ~and Wiremock.Net~
 - [x] Run it on GitHub Actions and output code coverage
 - [ ] Microsoft.Extensions.AI (Ollama for local dev and Azure OpenAI service)
