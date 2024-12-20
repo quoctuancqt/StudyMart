@@ -6,8 +6,8 @@
 - [x] Aspire 9
 - [x] Microservices architectural style
 - [x] Follows Vertical Sliding principles
-- [ ] Domain Driven Design building blocks
-- [ ] ~CQRS with MediatR and Fluent Validations~
+- [ ] ~Domain Driven Design building blocks~
+- [ ] CQRS with MediatR and Fluent Validations
 - [x] Shift-left Observability with .NET Aspire (OpenTelemetry built-in)
 - [x] OpenAPI supports
 - [ ] API Versioning
