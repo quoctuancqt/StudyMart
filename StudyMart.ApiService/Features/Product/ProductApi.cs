@@ -14,7 +14,8 @@ internal static class ProductApi
 {
     public static RouteGroupBuilder MapProductEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/products")
+        var group = routes.MapGroup("/api/v{version:apiVersion}/products")
+            .WithApiVersionSet(routes.CreateApiVersionSet())
             .WithTags("Products");
 
         group.RequireAuthorization();
@@ -91,7 +92,7 @@ internal static class ProductApi
             };
             db.Products.Add(product);
             await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/products/{product.ProductId}", product.ToDto());
+            return TypedResults.Created($"/api/v{{version:apiVersion}}/products/{product.ProductId}", product.ToDto());
         });
 
         group.MapDelete("/{id}", async Task<Results<NoContent, NotFound>> (int id, AppDbContext db) =>

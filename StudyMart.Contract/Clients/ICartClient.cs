@@ -5,9 +5,9 @@ namespace StudyMart.Contract.Clients;
 
 public interface ICartClient
 {
-    [Get("/api/shopping-carts")]
+    [Get("/api/v1/shopping-carts")]
     Task<ShoppingCartDto?> GetCartAsync();
 
-    [Post("/api/shopping-carts/batch")]
+    [Post("/api/v1/shopping-carts/batch")]
     Task<HttpResponseMessage> AddToCartAsync(IEnumerable<AddToCartDto> cartItems);
 }

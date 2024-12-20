@@ -5,18 +5,18 @@ namespace StudyMart.Contract.Clients;
 
 public interface ICategoryClient
 {
-    [Get("/api/categories")]
+    [Get("/api/v1/categories")]
     Task<List<CategoryDto>> GetCategoriesAsync();
     
-    [Get("/api/categories/{id}")]
+    [Get("/api/v1/categories/{id}")]
     Task<CategoryDto?> GetCategoryByIdAsync(int id);
     
-    [Post("/api/categories")]
+    [Post("/api/v1/categories")]
     Task<HttpResponseMessage> AddCategoryAsync(CategoryDto category);
     
-    [Put("/api/categories/{id}")]
+    [Put("/api/v1/categories/{id}")]
     Task<HttpResponseMessage> UpdateCategoryAsync(CategoryDto category);
     
-    [Delete("/api/categories/{id}")]
+    [Delete("/api/v1/categories/{id}")]
     Task<HttpResponseMessage> DeleteCategoryAsync(int id);
 }

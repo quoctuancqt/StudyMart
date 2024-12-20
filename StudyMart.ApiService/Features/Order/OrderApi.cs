@@ -17,7 +17,8 @@ internal static class OrderApi
 {
     public static RouteGroupBuilder MapOrderEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/orders")
+        var group = routes.MapGroup("/api/v{version:apiVersion}/orders")
+            .WithApiVersionSet(routes.CreateApiVersionSet())
             .WithTags("Order");
 
         group.RequireAuthorization();
@@ -88,7 +89,7 @@ internal static class OrderApi
 
             await db.SaveChangesAsync();
             
-            return TypedResults.Created($"/api/orders/{order.OrderId}", order.ToDto());
+            return TypedResults.Created($"/api/v{{version:apiVersion}}/orders/{order.OrderId}", order.ToDto());
         });
         
         group.MapPut("/{id}/status/{status}", async Task<Results<NoContent, NotFound>> (int id, OrderStatus status, AppDbContext db, MailKitClientFactory factory) =>

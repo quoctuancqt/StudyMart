@@ -23,7 +23,7 @@ public sealed class ProductApiTests : IClassFixture<ApiFixture>
     public async Task GetProduct()
     {
         // Act
-        var response = await _httpClient.GetAsync("/api/products");
+        var response = await _httpClient.GetAsync("/api/v1/products");
 
         // Assert
         response.EnsureSuccessStatusCode();

@@ -11,7 +11,8 @@ internal static class ShoppingCartApi
 {
     public static RouteGroupBuilder MapShoppingCartEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/shopping-carts")
+        var group = routes.MapGroup("/api/v{version:apiVersion}/shopping-carts")
+            .WithApiVersionSet(routes.CreateApiVersionSet())
             .WithTags("Shopping Cart");
 
         group.RequireAuthorization();

@@ -11,7 +11,8 @@ internal static class CategoryApi
 {
     public static RouteGroupBuilder MapCategories(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("api/categories")
+        var group = routes.MapGroup("/api/v{version:apiVersion}/categories")
+            .WithApiVersionSet(routes.CreateApiVersionSet())
             .WithTags("Categories");
 
         group.RequireAuthorization(config => config.RequireRole("Administrator"));
@@ -35,7 +36,7 @@ internal static class CategoryApi
             var category = new CategoryModel { Name = newCategory.Name, Description = newCategory.Description };
             db.Categories.Add(category);
             await db.SaveChangesAsync();
-            return TypedResults.Created($"/api/categories/{category.CategoryId}", category.ToDto());
+            return TypedResults.Created($"/api/v{{version:apiVersion}}/categories/{category.CategoryId}", category.ToDto());
         });
 
         group.MapPut("/{id}", async Task<Results<NoContent, NotFound, BadRequest<HttpValidationProblemDetails>>> (AppDbContext db, int id, CreateOrUpdateCategoryDto category) =>
