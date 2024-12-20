@@ -1,4 +1,5 @@
 # Study Mart
+[![CI (main)](https://github.com/quoctuancqt/StudyMart/actions/workflows/dotnet.yml/badge.svg)](https://github.com/quoctuancqt/StudyMart/actions/workflows/dotnet.yml)
 ![Code Coverage](https://img.shields.io/badge/Code%20Coverage-55%25-yellow?style=flat)
 > Notice: This is just a demo of how can we build and deploy the microservices approach.
 - [x] Built on .NET 9.0 STS
