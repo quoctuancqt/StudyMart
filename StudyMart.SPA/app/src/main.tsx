@@ -5,12 +5,15 @@ import { AuthProvider } from 'react-oidc-context';
 import App from './App.tsx';
 import { onSigninCallback, queryClient, userManager } from './config.ts';
 import './index.css'
+import { ThemeProvider } from './components/theme-provider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <App />
+        </ThemeProvider>
       </QueryClientProvider>
     </AuthProvider>
   </StrictMode>,
