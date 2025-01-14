@@ -15,7 +15,7 @@ public interface ICategoryClient
     Task<HttpResponseMessage> AddCategoryAsync(CategoryDto category);
     
     [Put("/api/v1/categories/{id}")]
-    Task<HttpResponseMessage> UpdateCategoryAsync(CategoryDto category);
+    Task<HttpResponseMessage> UpdateCategoryAsync(int id, CategoryDto category);
     
     [Delete("/api/v1/categories/{id}")]
     Task<HttpResponseMessage> DeleteCategoryAsync(int id);
