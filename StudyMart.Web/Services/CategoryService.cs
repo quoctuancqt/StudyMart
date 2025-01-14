@@ -27,7 +27,7 @@ public class CategoryService(ApiClient apiClient)
 
     public async Task UpdateCategoryAsync(CategoryDto category)
     {
-        var responseMessage = await _categoryClient.UpdateCategoryAsync(category);
+        var responseMessage = await _categoryClient.UpdateCategoryAsync(category.Id, category);
         responseMessage.EnsureSuccessStatusCode();
     }
 
