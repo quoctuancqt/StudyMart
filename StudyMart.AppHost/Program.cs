@@ -37,7 +37,7 @@ builder.AddProject<Projects.StudyMart_Web>("webfrontend")
     .WithReference(apiService)
     .WaitFor(apiService);
 
-var frontend = builder.AddNpmApp("frontend", "../StudyMart.SPA", "dev")
+var frontend = builder.AddNpmApp("frontend", "../StudyMart.SPA/app", "dev")
     .WithReference(apiService)
     .WaitFor(apiService)
     .WithReference(cache)
