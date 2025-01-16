@@ -6,13 +6,16 @@ import App from './App.tsx';
 import { onSigninCallback, queryClient, userManager } from './config.ts';
 import './index.css'
 import { ThemeProvider } from './components/theme-provider.tsx';
+import { BrowserRouter } from "react-router";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider userManager={userManager} onSigninCallback={onSigninCallback}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </ThemeProvider>
       </QueryClientProvider>
     </AuthProvider>
