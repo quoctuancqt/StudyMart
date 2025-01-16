@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@* @page "/" *@
 @using StudyMart.Contract.Product
 @using StudyMart.Contract.ShoppingCart
 @using StudyMart.Web.Services
@@ -8,10 +8,11 @@
 @inject CartContainer CartContainer
 @rendermode InteractiveServer
 @attribute [OutputCache(Duration = 10)]
+@inject NavigationManager NavigationManager
 
 <PageTitle>Home</PageTitle>
 
-<div class="row d-flex flex-wrap">
+@* <div class="row d-flex flex-wrap">
     @if (_products is not null)
     {
         foreach (var product in _products)
@@ -35,11 +36,12 @@
     {
         <Spinner Type="SpinnerType.Dots" Class="me-3" Color="SpinnerColor.Primary" />
     }
-</div>
+</div> *@
+<h1>Dashboard</h1>
 
 @code
 {
-    private List<ProductDto>? _products;
+    @* private List<ProductDto>? _products;
 
 
     protected override async Task OnInitializedAsync()
@@ -88,5 +90,10 @@
         
         CartContainer.AddToCart();
         await ProtectedLocalStorage.SetAsync("cart", items);
+    } *@
+
+    protected override void OnParametersSet()
+    {
+        NavigationManager.NavigateTo("category");
     }
 }
