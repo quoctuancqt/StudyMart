@@ -1,18 +1,23 @@
+import IconButton from '@/components/ui/icon-button';
 import { useProductsStore } from '@/features/products/productsStore';
 import { useFetchProducts } from '@/hooks/useProducts';
-import { ArrowRight } from 'lucide-react';
-import React from 'react'
+import { ShoppingCart } from 'lucide-react';
+import { useEffect } from 'react'
 
 const Home = () => {
     const { data } = useFetchProducts();
     const fetchProducts = useProductsStore((state) => state.fetchProducts);
     const { products } = useProductsStore();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (data) {
             fetchProducts(data);
         }
     }, [data]);
+
+    const onAddToCart = () => {
+        console.log('Added to cart');
+    };
 
     return (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
@@ -37,8 +42,12 @@ const Home = () => {
                             {product.description}
                         </p>
                         <p className="flex items-center hover:underline">
-                            Read more
-                            <ArrowRight className="ml-2 size-4" />
+                            <span className='flex-grow'></span>
+                            <IconButton
+                                onClick={onAddToCart}
+                                icon={<ShoppingCart size={20} />}
+                                className='ml-auto'
+                            />
                         </p>
                     </div>
                 </a>
