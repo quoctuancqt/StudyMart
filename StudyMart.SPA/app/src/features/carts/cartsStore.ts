@@ -21,6 +21,7 @@ type CartState = {
 type CartStore = CartState & {
     addToCart: (item: CartItem) => void;
     fetchCart: (cart: ShoppingCart) => void;
+    removeFromCart: (productId: number) => void;
 }
 
 const initialState: CartState = {
@@ -49,9 +50,15 @@ export const useCartStore = create<CartStore>()(
                     // Item does not exist, add new item
                     updatedItems = [...state.cart.items, { ...item, quantity: 1 }];
                 }
-                return { cart: { ...state.cart, items: updatedItems } };
+                const totalItems = updatedItems.reduce((sum, cartItem) => sum + cartItem.quantity, 0);
+                return { cart: { ...state.cart, items: updatedItems }, totalItems };
             }),
-            fetchCart: (cart) => set({ cart })
+            fetchCart: (cart) => set({ cart }),
+            removeFromCart: (productId) => set((state) => {
+                const updatedItems = state.cart.items.filter(cartItem => cartItem.productId !== productId);
+                const totalItems = updatedItems.reduce((sum, cartItem) => sum + cartItem.quantity, 0);
+                return { cart: { ...state.cart, items: updatedItems }, totalItems };
+            }),
         }),
         {
             name: 'cart-storage', 

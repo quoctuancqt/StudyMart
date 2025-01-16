@@ -24,12 +24,11 @@ import { useCartStore } from "@/features/carts/cartsStore";
 import { useAuth } from "react-oidc-context";
 
 const Navbar = () => {
-    const { cart } = useCartStore();
-    const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+    const { totalItems } = useCartStore();
     const auth = useAuth();
 
     const handleGotoCart = () => {
-        console.log('Go to cart');
+        window.location.href = '/cart';
     }
 
     return (
@@ -122,13 +121,13 @@ const Navbar = () => {
                                             variant: "ghost",
                                         }),
                                     )}>Cart</Link>
-                                    <Link to='/orders' className={cn(
+                                    {auth?.isAuthenticated && <Link to='/orders' className={cn(
                                         "text-muted-foreground",
                                         navigationMenuTriggerStyle,
                                         buttonVariants({
                                             variant: "ghost",
                                         }),
-                                    )}>Orders</Link>
+                                    )}>Orders</Link>}
                                     <Link to="/about" className={cn(
                                         "text-muted-foreground",
                                         navigationMenuTriggerStyle,
