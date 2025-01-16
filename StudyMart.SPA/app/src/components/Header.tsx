@@ -20,8 +20,14 @@ import { ModeToggle } from "@/components/mode-toggle";
 
 import AuthAction from "./AuthAction";
 import { Link } from "react-router";
+import { useCartStore } from "@/features/carts/cartsStore";
+import { useAuth } from "react-oidc-context";
 
 const Navbar = () => {
+    const { cart } = useCartStore();
+    const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+    const auth = useAuth();
+
     const handleGotoCart = () => {
         console.log('Go to cart');
     }
@@ -50,13 +56,13 @@ const Navbar = () => {
                                     variant: "ghost",
                                 }),
                             )}>Cart</Link>
-                            <Link to='/orders' className={cn(
+                            {auth?.isAuthenticated && <Link to='/orders' className={cn(
                                 "text-muted-foreground",
                                 navigationMenuTriggerStyle,
                                 buttonVariants({
                                     variant: "ghost",
                                 }),
-                            )}>Orders</Link>
+                            )}>Orders</Link>}
                             <Link to="/about" className={cn(
                                 "text-muted-foreground",
                                 navigationMenuTriggerStyle,
@@ -69,7 +75,7 @@ const Navbar = () => {
                     <div className="flex gap-2">
                         <Button variant='outline' onClick={handleGotoCart} className='flex items-center rounded-full px-4 py-2'>
                             <ShoppingBag size={20} />
-                            <span className='ml-2 text-sm font-medium'>{0}</span>
+                            <span className='ml-2 text-sm font-medium'>{totalItems}</span>
                         </Button>
                         <ModeToggle />
                         <AuthAction />

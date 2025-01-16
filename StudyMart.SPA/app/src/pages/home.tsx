@@ -1,4 +1,5 @@
 import IconButton from '@/components/ui/icon-button';
+import { CartItem, useCartStore } from '@/features/carts/cartsStore';
 import { useProductsStore } from '@/features/products/productsStore';
 import { useFetchProducts } from '@/hooks/useProducts';
 import { ShoppingCart } from 'lucide-react';
@@ -8,6 +9,7 @@ const Home = () => {
     const { data } = useFetchProducts();
     const fetchProducts = useProductsStore((state) => state.fetchProducts);
     const { products } = useProductsStore();
+    const addToCart = useCartStore((state) => state.addToCart);
 
     useEffect(() => {
         if (data) {
@@ -15,8 +17,8 @@ const Home = () => {
         }
     }, [data]);
 
-    const onAddToCart = () => {
-        console.log('Added to cart');
+    const onAddToCart = (cartItem: CartItem) => {
+        addToCart(cartItem);
     };
 
     return (
@@ -44,7 +46,7 @@ const Home = () => {
                         <p className="flex items-center hover:underline">
                             <span className='flex-grow'></span>
                             <IconButton
-                                onClick={onAddToCart}
+                                onClick={() => onAddToCart({ productId: product.id, quantity: 1, ...product })}
                                 icon={<ShoppingCart size={20} />}
                                 className='ml-auto'
                             />

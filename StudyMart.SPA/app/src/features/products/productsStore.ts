@@ -11,8 +11,6 @@ export type Product = {
 
 type ProductsState = {
     products: Product[];
-    loading: boolean;
-    error: string | null;
 }
 
 type ProductsStore = ProductsState & {
@@ -21,8 +19,6 @@ type ProductsStore = ProductsState & {
 
 const initialState: ProductsState = {
     products: [],
-    loading: false,
-    error: null,
 };
 
 export const useProductsStore = create<ProductsStore>((set) => ({
