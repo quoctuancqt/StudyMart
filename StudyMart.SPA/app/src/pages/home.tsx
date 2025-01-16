@@ -43,12 +43,15 @@ const Home = () => {
                         <p className="mb-3 text-muted-foreground md:mb-4 lg:mb-6">
                             {product.description}
                         </p>
-                        <p className="flex items-center hover:underline">
+                        <p className="flex items-center">
+                            <span className="text-primary-500 font-semibold no-underline">
+                                ${product.price}
+                            </span>
                             <span className='flex-grow'></span>
                             <IconButton
                                 onClick={() => onAddToCart({ productId: product.id, quantity: 1, ...product })}
                                 icon={<ShoppingCart size={20} />}
-                                className='ml-auto'
+                                className='ml-auto hover:underline'
                             />
                         </p>
                     </div>
