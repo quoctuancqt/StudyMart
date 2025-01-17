@@ -19,7 +19,7 @@ import {
 import { ModeToggle } from "@/components/mode-toggle";
 
 import AuthAction from "./AuthAction";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { useCartStore } from "@/features/carts/cartsStore";
 import { useAuth } from "react-oidc-context";
 
@@ -31,6 +31,13 @@ const Navbar = () => {
         window.location.href = '/cart';
     }
 
+    const normalClass = cn(
+        "text-muted-foreground",
+        navigationMenuTriggerStyle,
+        buttonVariants({
+            variant: "ghost",
+        }));
+
     return (
         <section className="py-4">
             <div className="container">
@@ -41,34 +48,15 @@ const Navbar = () => {
                             <span className="text-xl font-bold">Study Mart</span>
                         </div>
                         <div className="flex items-center">
-                            <Link to='/' className={cn(
-                                "text-muted-foreground",
-                                navigationMenuTriggerStyle,
-                                buttonVariants({
-                                    variant: "ghost",
-                                }),
-                            )}>Home</Link>
-                            <Link to='/cart' className={cn(
-                                "text-muted-foreground",
-                                navigationMenuTriggerStyle,
-                                buttonVariants({
-                                    variant: "ghost",
-                                }),
-                            )}>Cart</Link>
-                            {auth?.isAuthenticated && <Link to='/orders' className={cn(
-                                "text-muted-foreground",
-                                navigationMenuTriggerStyle,
-                                buttonVariants({
-                                    variant: "ghost",
-                                }),
-                            )}>Orders</Link>}
-                            <Link to="/about" className={cn(
-                                "text-muted-foreground",
-                                navigationMenuTriggerStyle,
-                                buttonVariants({
-                                    variant: "ghost",
-                                }),
-                            )}>About</Link>
+                            <NavLink to="/" className={({ isActive }) =>
+                                isActive ? "active" : normalClass
+                            }>Home</NavLink>
+                            <NavLink to="/cart" className={({ isActive }) =>
+                                isActive ? "active" : normalClass
+                            }>Cart</NavLink>
+                            {auth.isAuthenticated && <NavLink to="/orders" className={({ isActive }) =>
+                                isActive ? "active" : normalClass
+                            }>Orders</NavLink>}
                         </div>
                     </div>
                     <div className="flex gap-2">
@@ -107,34 +95,15 @@ const Navbar = () => {
                                     </SheetTitle>
                                 </SheetHeader>
                                 <div className="mb-8 mt-8 flex flex-col gap-4">
-                                    <Link to='/' className={cn(
-                                        "text-muted-foreground",
-                                        navigationMenuTriggerStyle,
-                                        buttonVariants({
-                                            variant: "ghost",
-                                        }),
-                                    )}>Home</Link>
-                                    <Link to='/cart' className={cn(
-                                        "text-muted-foreground",
-                                        navigationMenuTriggerStyle,
-                                        buttonVariants({
-                                            variant: "ghost",
-                                        }),
-                                    )}>Cart</Link>
-                                    {auth?.isAuthenticated && <Link to='/orders' className={cn(
-                                        "text-muted-foreground",
-                                        navigationMenuTriggerStyle,
-                                        buttonVariants({
-                                            variant: "ghost",
-                                        }),
-                                    )}>Orders</Link>}
-                                    <Link to="/about" className={cn(
-                                        "text-muted-foreground",
-                                        navigationMenuTriggerStyle,
-                                        buttonVariants({
-                                            variant: "ghost",
-                                        }),
-                                    )}>About</Link>
+                                    <NavLink to="/" className={({ isActive }) =>
+                                        isActive ? "active" : normalClass
+                                    }>Home</NavLink>
+                                    <NavLink to="/cart" className={({ isActive }) =>
+                                        isActive ? "active" : normalClass
+                                    }>Cart</NavLink>
+                                    {auth.isAuthenticated && <NavLink to="/orders" className={({ isActive }) =>
+                                        isActive ? "active" : normalClass
+                                    }>Orders</NavLink>}
                                 </div>
                                 <div className="border-t pt-4">
                                     <div className="mt-2 flex flex-col gap-3">

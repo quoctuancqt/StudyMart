@@ -22,6 +22,7 @@ type CartStore = CartState & {
     addToCart: (item: CartItem) => void;
     fetchCart: (cart: ShoppingCart) => void;
     removeFromCart: (productId: number) => void;
+    clearCart: () => void;
 }
 
 const initialState: CartState = {
@@ -59,6 +60,7 @@ export const useCartStore = create<CartStore>()(
                 const totalItems = updatedItems.reduce((sum, cartItem) => sum + cartItem.quantity, 0);
                 return { cart: { ...state.cart, items: updatedItems }, totalItems };
             }),
+            clearCart: () => set(initialState),
         }),
         {
             name: 'cart-storage', 

@@ -1,21 +1,21 @@
 import IconButton from '@/components/ui/icon-button';
 import { CartItem, useCartStore } from '@/features/carts/cartsStore';
-import { useProductsStore } from '@/features/products/productsStore';
+// import { useProductsStore } from '@/features/products/productsStore';
 import { useFetchProducts } from '@/hooks/useProducts';
 import { ShoppingCart } from 'lucide-react';
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 
 const Home = () => {
     const { data } = useFetchProducts();
-    const fetchProducts = useProductsStore((state) => state.fetchProducts);
-    const { products } = useProductsStore();
+    // const fetchProducts = useProductsStore((state) => state.fetchProducts);
+    // const { products } = useProductsStore();
     const addToCart = useCartStore((state) => state.addToCart);
 
-    useEffect(() => {
-        if (data) {
-            fetchProducts(data);
-        }
-    }, [data]);
+    // useEffect(() => {
+    //     if (data) {
+    //         fetchProducts(data);
+    //     }
+    // }, [data]);
 
     const onAddToCart = (cartItem: CartItem) => {
         addToCart(cartItem);
@@ -23,7 +23,7 @@ const Home = () => {
 
     return (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {products.map((product) => (
+            {data?.map((product) => (
                 <a
                     key={product.id}
                     href="#"

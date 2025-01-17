@@ -2,24 +2,27 @@ import { Button } from '@/components/ui/button';
 // import { toast } from '@/components/ui/use-toast';
 import { useCartStore } from '@/features/carts/cartsStore';
 import Currency from '@/components/ui/currency';
+import { useAuth } from 'react-oidc-context';
+import { useNavigate } from 'react-router';
 
 const Summary = () => {
   const items = useCartStore((state) => state.cart.items);
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   const totalPrice = items.reduce((total, item) => {
     return total + Number(item.price);
   }, 0);
 
   const onCheckout = async () => {
-    // const response = await axios.post(
-    //   `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
-    //   {
-    //     productIds: items.map((item) => item.id),
-    //   }
-    // );
-
-    // window.location = response.data.url;
-    console.log('Checkout');
+    if(!auth.isAuthenticated)
+    {
+      await auth.signinRedirect();
+    }
+    else
+    {
+      navigate('/checkout');
+    }
   };
 
   return (
