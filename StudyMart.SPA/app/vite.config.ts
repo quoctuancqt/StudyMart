@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd());
+  // const env = loadEnv(mode, process.cwd());
   return {
     plugins: [
       react()
@@ -14,8 +14,22 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
-    // define: {
-    //   "import.meta.env.VITE_API_URL": JSON.stringify(`${env['services__apiservice__https__0']}`),
-    // }
+    // server: {
+    //   port: parseInt(env.VITE_PORT),
+    //   proxy: {
+    //     '/api/v1': {
+    //       target: process.env.services__apiservice__http__0 ||
+    //         process.env.services__apiservice__https__0,
+    //       changeOrigin: true,
+    //       secure: false,
+    //     }
+    //   }
+    // },
+    build: {
+      outDir: 'dist',
+      rollupOptions: {
+        input: './index.html'
+      }
+    }
   };
 })
