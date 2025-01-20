@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button';
-// import { toast } from '@/components/ui/use-toast';
 import { useCartStore } from '@/features/carts/cartsStore';
 import Currency from '@/components/ui/currency';
 import { useAuth } from 'react-oidc-context';
 import { useNavigate } from 'react-router';
+import apiClient from '@/api/apiClient';
 
 const Summary = () => {
   const items = useCartStore((state) => state.cart.items);
@@ -15,13 +15,13 @@ const Summary = () => {
   }, 0);
 
   const onCheckout = async () => {
-    if(!auth.isAuthenticated)
-    {
-      await auth.signinRedirect();
+    if (!auth.isAuthenticated) {
+      await auth.signinRedirect({ state: { returnUrl: window.location.pathname } });
     }
-    else
-    {
-      navigate('/checkout');
+    else {
+      await apiClient.post('/shopping-carts/batch', JSON.stringify(items)).then(() => {
+        navigate('/checkout');
+      });
     }
   };
 
