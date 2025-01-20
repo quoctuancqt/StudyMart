@@ -22,4 +22,6 @@ public class OrderService(ApiClient apiClient)
     }
     
     public async Task<OrderDto?> CreateOrderAsync(CreateOrderDto dto) =>  await _orderClient.CreateOrderAsync(dto);
+
+    public async Task ChangeOrderAynsc(int id, OrderStatus status) => await _orderClient.UpdateOrderStatusAsync(id, status);
 }

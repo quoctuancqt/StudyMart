@@ -5,6 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Launch Edge Against Vite",
+            "url": "http://localhost:5173",
+            "webRoot": "${workspaceFolder}/StudyMart.SPA/app/src",
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/*"
+            }
+        },
+        {
+            "type": "msedge",
+            "request": "attach",
+            "name": "Attach to Edge",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}/StudyMart.SPA/app/src"
+        },
+        {
             "name": "aspire",
             "type": "dotnet",
             "request": "launch",

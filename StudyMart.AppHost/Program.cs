@@ -37,6 +37,13 @@ builder.AddProject<Projects.StudyMart_Web>("webfrontend")
     .WithReference(apiService)
     .WaitFor(apiService);
 
+// var frontend = builder.AddNpmApp("frontend", "../StudyMart.SPA/app", "dev")
+//     .WithReference(apiService)
+//     .WithEnvironment("BROWSER", "none")
+//     .WithHttpEndpoint(env: "VITE_PORT")
+//     .WithExternalHttpEndpoints()
+//     .PublishAsDockerFile();
+
 builder.SubscribeAppHostEvent();
 builder.SubscribeResourceEvent(cache.Resource);
 
