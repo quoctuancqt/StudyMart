@@ -27,6 +27,16 @@ builder.AddRedisDistributedCache("cache");
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
@@ -149,6 +159,8 @@ if (app.Environment.IsDevelopment())
     //     await dbContext.SeedData();
     // });
 }
+
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();

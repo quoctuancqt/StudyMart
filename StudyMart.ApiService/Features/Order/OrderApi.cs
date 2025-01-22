@@ -108,8 +108,8 @@ internal static class OrderApi
                 return TypedResults.NoContent();
             
             using var message = new MailMessage("newsletter@yourcompany.com", order.Email);
-            message.Subject = $"Your order has been change status to {status.ToString()}!";
-            message.Body = "Thank you for ordering!";
+            message.Subject = $"Your order has been change status to {status}!";
+            message.Body = status == OrderStatus.Processing ? "Thank you for ordering!" : "Your order is cancel!";
 
             await client.SendAsync(MimeMessage.CreateFromMailMessage(message));
 

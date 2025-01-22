@@ -16,3 +16,4 @@
 - [ ] Microsoft.Extensions.AI (Ollama for local dev and Azure OpenAI service)
 - [x] Response Caching - Distributed Caching with Redis
 - [x] JWT & Authentication with Keycloak
+- [x] Use Vite (React) for Frontend site and Blazor for Back Office
