@@ -29,7 +29,7 @@ internal static class OrderApi
         {
             var orders = await db.Orders
                 .AsNoTracking()
-                .Where(o => o.UserId == currentUser.UserId)
+                .Where(o => currentUser.IsAdmin || o.UserId == currentUser.UserId)
                 .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
             return TypedResults.Ok(orders.Select(o => o.ToDto()));
