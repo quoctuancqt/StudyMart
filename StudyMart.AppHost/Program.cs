@@ -16,8 +16,12 @@ var cache = builder.AddRedis("cache")
 var mailDev = builder.AddMailDev("maildev")
                     .WithLifetime(ContainerLifetime.Persistent);
 
-var keycloak = builder.AddKeycloak("keycloak", 8080)
-                        // .WithRealmImport("./realms")
+// https://medium.com/@manuel_gabteni/exporting-keycloak-realms-the-easy-way-using-a-custom-net-aspire-command-aab5b5806b18
+var realmName = "keycloak"; 
+var keycloakRealmImportPath = "./realms";
+var keycloak = builder.AddKeycloak(realmName, 8080)
+                        // .WithRealmImport(keycloakRealmImportPath)
+                        .WithExportRealmCommand(realmName, keycloakRealmImportPath)
                         .WithLifetime(ContainerLifetime.Persistent);
 
 var apiService = builder.AddProject<Projects.StudyMart_ApiService>("apiservice")

@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Sdk Name="Aspire.AppHost.Sdk" Version="9.1.0" />
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.2.0" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <IsAspireHost>true</IsAspireHost>
+    <!-- <IsAspireHost>true</IsAspireHost> -->
     <UserSecretsId>1b525950-56be-4053-be84-520ac19fc996</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
@@ -19,6 +19,7 @@
     <PackageReference Include="Aspire.Hosting.NodeJs" />
     <PackageReference Include="Aspire.Hosting.PostgreSQL" />
     <PackageReference Include="Aspire.Hosting.Redis" />
+    <PackageReference Include="CliWrap" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="realms\study-mart.json" />

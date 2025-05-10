@@ -1,0 +1,3 @@
+After import real to keycloak:
+- Create an admin user (groups: admin), then assign the user with Administrator role
+- Create an normal user (groups: user), then assign the user with User role
